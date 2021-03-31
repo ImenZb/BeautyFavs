@@ -1,0 +1,51 @@
+<ion-content>
+    <ion-grid class="ion-no-padding">
+        <ion-row class="ion-no-padding">
+            <ion-col size="12" class="background" class="ion-no-padding">
+                <div class="img-wrapper ion-no-padding" [style.background-image]="'url(../../../assets/images/home1.jpg)'">
+                    <ion-list-header class="ion-no-padding ion-margin-top">
+                        <ion-label class="ion-text-center ion-padding-vertical" color="primary">
+                            <h1 class="ion-text-capitalize"><b>BeautyFavs feed</b></h1>
+                            <p>Paratager vos favoris</p>
+    
+                        </ion-label>
+                    </ion-list-header>
+                </div>
+                
+            </ion-col>
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                    <div *ngFor="let product of (products | async)">
+                        <ion-list-header lines="line" class="ion-no-padding">
+                            <ion-chip [style.background]="'#fff'">
+                                <ion-avatar>
+                                <img src="../../../assets/icons/profilFemal.svg">
+                                </ion-avatar>
+                                <ion-label>{{product.username}}</ion-label>
+                            </ion-chip>
+                        </ion-list-header>
+                        <ion-card class="ion-no-padding ion-no-margin">
+                            <img [src]="product.image_url"/>
+                            <ion-card-header class="ion-no-padding ion-no-margin">
+                                <ion-button fill="clear" shape="round" size="small">
+                                    <ion-icon  name="heart-outline" slot="start"></ion-icon>
+                                    <ion-text><sub>1</sub></ion-text>
+                                </ion-button>
+                                <ion-button fill="clear" shape="round" size="small">
+                                    <ion-icon name="bookmark-outline"></ion-icon>
+                                </ion-button>
+                            </ion-card-header>
+                            <ion-card-header class="ion-no-padding">
+                                <ion-card-subtitle>{{product.brands}}</ion-card-subtitle>
+                                <ion-card-title>{{product.product_name}}</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                            P ost body
+                            </ion-card-content>
+                        </ion-card>
+                    </div>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
