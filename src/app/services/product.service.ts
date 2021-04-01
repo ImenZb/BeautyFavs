@@ -4,7 +4,6 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { IProduit } from '../interfaces/produit';
 
-const url = './assets/data.json';
 const urlDB = 'http://localhost:3000/products';
 
 @Injectable({
@@ -16,13 +15,10 @@ export class ProductService {
 
   getAll(): Observable<IProduit[]>{
     return this.http.get<IProduit[]>(urlDB);
-   /* return this.http.get(url).pipe(
-      map((response: {products: IProduit[]}) => response.products)
-    );*/
   }
 
-  create(product: IProduit): Observable<IProduit>{
-    return this.http.post<IProduit>(urlDB,product);
+  create(product: IProduit): Promise<IProduit>{
+    return this.http.post<IProduit>(urlDB,product).toPromise();
   }
 
   

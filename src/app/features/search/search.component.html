@@ -3,15 +3,30 @@
     <ion-grid>
        <ion-row>
            <ion-col size="12">
-            <ion-searchbar></ion-searchbar>
+            <ion-searchbar (keyup.enter)="filterList($event)"></ion-searchbar>
            </ion-col>
        </ion-row>
        <ion-row>
            <ion-col size="12">
                <ion-list>
-                  <ion-item>
-                      <ion-label>Awesome Label</ion-label>
-                  </ion-item> 
+                  <ng-container *ngFor="let result of (results |async)?.items">
+                    <ng-container *ngIf="(result?.pagemap?.cse_thumbnail) || !(result?.htmlTitle.includes('ligne'))">
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <img [src]="result?.pagemap?.cse_thumbnail[0]?.src">
+                            </ion-avatar>
+                            <ion-label class="ion-text-wrap myLabel"> 
+                                <ion-text [innerHTML]="result?.htmlTitle.split('/b>')[0] + '/b>'"></ion-text>
+                                <ion-text color="primary">
+                                    <br/>Vendu par {{result.displayLink.split('.')[1]}}
+                                </ion-text>
+                            </ion-label>
+                            <ion-button fill="clear" shape="round" size="small" (click)="openModal(result)">
+                                <ion-icon slot="end" name="add"></ion-icon>
+                            </ion-button>
+                        </ion-item>
+                    </ng-container>
+                  </ng-container> 
                </ion-list>
            </ion-col>
        </ion-row>

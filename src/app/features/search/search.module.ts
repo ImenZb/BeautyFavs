@@ -5,6 +5,7 @@ import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './search.component';
 import { IonicModule } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     SearchRoutingModule,
     IonicModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ]
 })
 export class SearchModule { }
