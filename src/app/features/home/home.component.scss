@@ -1,8 +1,40 @@
 .img-wrapper {
-    min-height: 100px;
+    min-height: 40px;
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     vertical-align:middle;
 }
 
+
+
+ion-header h1 {
+    font-size: 20px!important;
+    font-weight: 700;
+    color: #1e2023!important;
+    margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+.post_img {
+    width: 100%;
+  }
+
+  ion-avatar{
+    padding: 2px;
+    
+    height: 35px;
+    width: 35px;
+  }
+
+  ion-label {
+    font-size: 14px!important;
+    font-weight: 700;
+    color: #1e2023!important;
+  }
+
+  .post-text {
+    font-size: 13px;
+    margin: 0px 6px 4px 6px;
+  }

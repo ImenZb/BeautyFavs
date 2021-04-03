@@ -17,6 +17,12 @@ export class ProductService {
     return this.http.get<IProduit[]>(urlDB);
   }
 
+  getById(id:string): Observable<IProduit>{
+    return this.http.get<IProduit[]>(urlDB).pipe(
+      map(products => products.find(a => a.id === id))
+    );
+  }
+
   create(product: IProduit): Promise<IProduit>{
     return this.http.post<IProduit>(urlDB,product).toPromise();
   }

@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ModalAddComponent implements OnInit {
   @Input() productName:string;
+  @Input() productImg:string;
   tags:string[]=['anti-acne','anti-rides','anti-rougeurs','anti-UV','bronzant',
                 'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
                 'peaux-normales','cheveux','masque','corps','rasage','mains'];

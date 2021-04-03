@@ -1,7 +1,7 @@
 import { IPost } from "./post";
 
 export interface IProduit {
-    id:number;
+    id:string;
     product_name:string;
     brands:string;
     category:string;
@@ -14,7 +14,7 @@ export interface IProduit {
 }
 
 export class Produit implements IProduit{
-    id:number;
+    id:string;
     product_name:string;
     brands:string;
     category:string;

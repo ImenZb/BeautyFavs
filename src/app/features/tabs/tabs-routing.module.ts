@@ -14,6 +14,10 @@ const routes: Routes = [
                                             .then(m => m.SearchModule)
       },
       {
+        path: 'detail', loadChildren: () => import('../detail/detail.module')
+                                            .then(m => m.DetailModule)
+      },
+      {
         path:'',
         redirectTo: 'home',
         pathMatch: 'full'
