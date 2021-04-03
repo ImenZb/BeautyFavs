@@ -18,6 +18,10 @@ const routes: Routes = [
                                             .then(m => m.DetailModule)
       },
       {
+        path: 'profil', loadChildren: () => import('../profil/profil.module')
+                                            .then(m => m.ProfilModule)
+      },
+      {
         path:'',
         redirectTo: 'home',
         pathMatch: 'full'

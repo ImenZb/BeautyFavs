@@ -1,0 +1,56 @@
+h1 {
+    font-size: 30px;
+}
+
+
+
+ion-toolbar{
+    --min-height:35px!important;
+}
+
+.grid{
+    padding-bottom: 20px;
+}
+
+ion-item{
+    padding-top: 20px!important;
+}
+
+.item-avatar  {     
+    width:100% !important;  
+    height : 100% !important;  
+    max-width: 100px !important;  
+    max-height: 100px !important; 
+}
+
+ion-avatar img{
+    border-radius: 0;
+    opacity: 0.2;  
+}
+
+
+
+ion-label{
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.allProducts{
+    position: absolute;
+    right: 5px;
+}
+.img_box {
+    width: 33.3%;
+    padding-bottom: 31%;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-bottom: 0;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon slot="start" name="create-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <div class="ion-text-center grid">
+        <img class="img_box" src="../../../assets/icons/profilFemal.svg">
+        <ion-title>Username</ion-title>
+    </div>
+    
+</ion-header>
+<ion-content>  
+    <ion-grid class="ion-no-padding ion-no-margin">
+        <ion-row class="ion-no-padding ion-no-margin">
+            <ion-col size="12" class="ion-no-padding ion-no-margin">
+                <ion-button fill="clear" shape="round" size="small">
+                    <ion-icon  name="add-outline" slot="start"></ion-icon>
+                    <ion-label>New collection</ion-label>
+                </ion-button>
+                <ion-button class="allProducts" fill="clear" shape="round" size="small">
+                    <ion-label>All products</ion-label>
+                </ion-button> 
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-no-padding ion-no-margin">
+            <ion-col size="12" class="ion-no-padding ion-no-margin">
+                <ion-item class="ion-no-margin" lines="none">
+                    <ion-icon slot="start" name="folder-outline"></ion-icon>
+                    <ion-label><h4>Favorites</h4></ion-label>
+                    <ion-button class="collection" fill="clear" shape="round">
+                        <ion-icon slot="end" name="more"></ion-icon>
+                    </ion-button>
+                </ion-item> 
+                <ion-item class="ion-no-margin" lines="none">
+                    <ion-icon slot="start" name="folder-outline"></ion-icon>
+                    <ion-label><h4>Wishlist</h4></ion-label>
+                    <ion-button class="collection" fill="clear" shape="round">
+                        <ion-icon slot="end" name="more"></ion-icon>
+                    </ion-button>
+                </ion-item>  
+            </ion-col>
+        </ion-row>
+        
+    </ion-grid>
+</ion-content>
