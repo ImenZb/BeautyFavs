@@ -36,18 +36,7 @@ export class SearchComponent implements OnInit {
    this.resultsGoogle = this.getGoogle();
    this.resultsLocal = this.getLocal();
   }
-/*
-  get(): Observable<Article[]> {
-    return forkJoin(
-      this.getArticles(),         // la requête http qui récupère la liste des articles
-      this.getAuthorOfTheMonth()  // celle qui récupère l'auteur du mois
-    ).pipe(
-      map(([articles, authorOfTheMonth]) =>
-        // le filtre qui exclut les articles qui ne sont pas de cet auteur
-        articles.filter(article => article['author'] === authorOfTheMonth['name'])
-      )
-    )
-  }*/
+
 
   getGoogle(): Observable<any[]>{
     return forkJoin([

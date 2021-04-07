@@ -18,9 +18,10 @@ const routes: Routes = [
                                             .then(m => m.DetailModule)
       },
       {
-        path: 'profil', loadChildren: () => import('../profil/profil.module')
-                                            .then(m => m.ProfilModule)
-      },
+        path: 'add', loadChildren: () => import('../add-product/add-product.module')
+                                            .then(m => m.AddProductModule)
+      }
+      ,
       {
         path:'',
         redirectTo: 'home',

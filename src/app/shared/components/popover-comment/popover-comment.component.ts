@@ -39,6 +39,8 @@ export class PopoverCommentComponent implements OnInit {
     this.popoverController.dismiss();
   }
 
+  //add post to firebase
+  
   ClosePopover() {
     this.popoverController.dismiss();
   }

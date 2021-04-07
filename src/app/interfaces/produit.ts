@@ -1,29 +1,29 @@
 import { IPost } from "./post";
 
 export interface IProduit {
-    id:string;
+    id?:string;
     product_name:string;
     brands:string;
     category:string;
     tag:string;
-    imageUrl:string;
-    username: string;
+    imageUrl?:string;
+    username?: string;
     created_datetime:string;
     feed:[{postId:number,body:string}];
-    likes:number;
+    likes?:number;
 }
 
 export class Produit implements IProduit{
-    id:string;
+    id?:string;
     product_name:string;
     brands:string;
     category:string;
     tag:string;
-    imageUrl:string;
-    username: string;
+    imageUrl?:string;
+    username?: string;
     created_datetime:string;
     feed:[{postId:number,body:string}];
-    likes:number;
+    likes?:number;
     
     constructor(params){
         Object.assign(this,params);

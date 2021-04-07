@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
-import { tap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { IProduit } from 'src/app/interfaces/produit';
 import { IUser } from 'src/app/interfaces/user';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { PopoverCommentComponent } from 'src/app/shared/components/popover-comment/popover-comment.component';
 import { ModalCommentComponent } from 'src/app/shared/components/modal-comment/modal-comment.component';
-
+import { AngularFireDatabase } from '@angular/fire/database';
+//import { ProductService } from 'src/app/servicesFirebase/product.service'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
   products: Observable<IProduit[]>;
+  productList: Observable<IProduit[]>;//from Firebase
   filtered:boolean = false;
   category:string='all';
   searchTag:string=null;
@@ -42,10 +42,16 @@ export class HomeComponent implements OnInit {
   constructor(private serviceProduct: ProductService,
               private userService: UserService,
               public popoverController: PopoverController,
-              public modalController: ModalController) { }
+              public modalController: ModalController,
+              private db: AngularFireDatabase) { }
 
   ngOnInit(): void {
     this.products = this.serviceProduct.getAll();
+    /*Angular firebase
+    this.productList = this.db.list('product').snapshotChanges.pipe(
+      map(changes => changes.map(c =>
+        ({ key: c.payload.key, ...c.payload.val() })
+      )))*/
   }
   async presentPopover(ev: any,product) {
     const popover = await this.popoverController.create({
