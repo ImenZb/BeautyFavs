@@ -4,3 +4,12 @@
 
 /* To quickly generate your own theme, check out the color generator */
 /* https://ionicframework.com/docs/theming/color-generator */
+
+
+
+.custom-popover .popover-content {
+    width: 100%;
+    top: 500px!important;
+    left: -1px!important;
+    bottom: 0px;
+  }

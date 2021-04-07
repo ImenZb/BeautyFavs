@@ -1,9 +1,12 @@
 <ion-header translucent>
-    <ion-toolbar [style.--background]="'url('+(item | async)?.image_url+')'">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="home"></ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
+    <ng-container *ngIf="(item | async) as item">
+        <ion-toolbar [style.--background]="'url('+item.image_url || './assets/images/home.jpg'+')'">
+            <ion-buttons slot="start">
+                <ion-back-button defaultHref="home"></ion-back-button>
+            </ion-buttons>
+        </ion-toolbar> 
+    </ng-container>
+   
 </ion-header>
 <ion-content>
     <ion-grid>

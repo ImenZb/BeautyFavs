@@ -9,7 +9,7 @@ export interface IProduit {
     imageUrl:string;
     username: string;
     created_datetime:string;
-    feed:IPost[];
+    feed:[{postId:number,body:string}];
     likes:number;
 }
 
@@ -22,7 +22,7 @@ export class Produit implements IProduit{
     imageUrl:string;
     username: string;
     created_datetime:string;
-    feed:IPost[];
+    feed:[{postId:number,body:string}];
     likes:number;
     
     constructor(params){

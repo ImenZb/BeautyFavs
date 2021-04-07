@@ -1,0 +1,33 @@
+  <ion-grid class="ion-no-padding" fixed>
+      <ion-row class="ion-no-padding">
+          <ion-col size="12" class="ion-no-padding">
+            <ion-item lines="none">
+                <ion-label class="smilies" (click)="ic.value = ic.value + getSmiley($event)">
+                    <span> 🔥</span>
+                    <span> 😊</span>
+                    <span> 😍</span>
+                    <span> 💖</span>
+                    <span> 👍</span>
+                    <span> 👏</span>
+                    <span> 🌺</span>
+                    <span> ❗</span>
+                    <span> 🛑</span>
+                    <span> ⚕️</span>
+                </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" class="ion-no-padding">
+            <ion-item lines="none">
+                <ion-avatar class="comment_avatar" slot="start">
+                    <img [src]="'../../../assets/images/users/'+user.photoUrl" />
+                </ion-avatar>
+                <ion-item class="inputComment">
+                    <ion-input type="text" placeholder="Ajouter un commentaire..." #ic></ion-input>
+                    <ion-button (click)="sendComment(ic)" fill="clear" shape="round">
+                        <ion-icon slot="end" name="send"></ion-icon>
+                    </ion-button>
+                </ion-item>
+            </ion-item>
+          </ion-col>
+      </ion-row>
+  </ion-grid>

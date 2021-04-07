@@ -19,27 +19,63 @@ ion-header h1 {
 
 .post_img {
     width: 100%;
+    max-height: 300px;
   }
 
-  ion-avatar{
-    padding: 2px;
-    
-    height: 35px;
-    width: 35px;
-  }
+.post_avatar{
+   padding: 2px;
+   height: 35px;
+   width: 35px;
+}
 
-  ion-label {
-    font-size: 14px!important;
-    font-weight: 700;
-    color: #1e2023!important;
-  }
+.post_label{
+   font-size: 14px!important;
+   font-weight: 700;
+   color: #1e2023!important;
+}
 
-  .post-text {
-    font-size: 13px;
-    margin: 0px 6px 4px 6px;
-  }
+.post-text {
+   font-size: 13px;
+   margin: 0px 6px 4px 6px;
+}
 
-  .bookmark{
-      position: absolute;
-      right: 5px;
-  }
+.comment-text {
+   font-size: 12px;
+   margin: 0px 6px 4px 6px;
+   color: var(--ion-color-medium);
+}
+
+.comment_avatar{
+    padding: 1px;
+    height: 40px;
+    width: 40px;
+ }
+
+.bookmark{
+    position: absolute;
+    right: 5px;
+}
+
+ion-segment{
+   height: 40px;
+   min-height: 40px;
+   padding-top: 5px;
+}
+
+ion-segment-button{
+   font-weight: bold;
+   font-size: 12px;
+   color: var(--ion-color-medium);;
+   text-transform: capitalize;
+   /*--border-color: #f2f2f2;
+   --border-radius: 5px;
+   --border-style: solid;
+   --border-width: 1px;*/
+}
+
+ion-segment-button {
+   height: 30px;
+   min-height: 30px;
+   --padding-end:3px;
+   color:#1e2023;
+}

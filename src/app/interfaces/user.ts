@@ -3,19 +3,7 @@ export interface IUser {
     name: string;
     username: string,
     email: string;
-    address: {
-          street: string,
-          suite: string,
-          city: string,
-          zipcode: string,
-          geo: {
-            lat: string,
-            lng: string
-          }
-        },
-    phone: string;
+    address: {street: string, city: string,zipcode: string};
     photoUrl:string;
-    following:IUser[];
-    followers:IUser[];
 }
 
