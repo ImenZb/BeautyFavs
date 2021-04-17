@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { COMPONENTS } from './components';
 import { IonicModule } from '@ionic/angular';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverCommentComponent } from './components/popover-comment/popover-comment.component';
 import { ModalCommentComponent } from './components/modal-comment/modal-comment.component';
 
@@ -13,7 +13,8 @@ import { ModalCommentComponent } from './components/modal-comment/modal-comment.
   imports: [
     CommonModule,
     IonicModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

@@ -2,37 +2,58 @@
     <ng-container *ngIf="(item | async) as item">
         <ion-toolbar [style.--background]="'url('+item.image_url || './assets/images/home.jpg'+')'">
             <ion-buttons slot="start">
-                <ion-back-button defaultHref="home"></ion-back-button>
+                <ion-back-button></ion-back-button>
             </ion-buttons>
         </ion-toolbar> 
     </ng-container>
-   
 </ion-header>
-<ion-content>
-    <ion-grid>
-        <ion-row>
-            <ion-col size="12">
+
+<ion-content fullscreen>
+    <ion-grid class="ion-no-padding">
+        <ion-row class="ion-no-padding"> 
                 <ion-col size="12" class="background" class="ion-no-padding">              
                     <ion-card class="ion-no-padding ion-no-margin">
                         <ion-card-header class="ion-no-padding ion-no-margin">
                             <ion-button fill="clear" shape="round" size="small">
                                 <ion-icon  name="heart-outline" slot="start"></ion-icon>
-                                <ion-text><sub>1</sub></ion-text>
                             </ion-button>
-                            <ion-button fill="clear" shape="round" size="small">
+                            <ion-button fill="clear" shape="round" size="small" class="bookmark">
                                 <ion-icon name="bookmark-outline"></ion-icon>
                             </ion-button>
                         </ion-card-header>
-                        <ion-card-header class="ion-no-padding">
-                            <ion-card-subtitle>{{(item | async)?.brand}}</ion-card-subtitle>
-                            <ion-card-title>{{(item | async)?.product_name}}</ion-card-title>
+                        <ion-card-header>
+                            <ion-card-subtitle class="ion-no-margin"><p class="post-text"><b>{{(item | async)?.likes}} likes</b></p></ion-card-subtitle>
+                            <ion-card-title class="ion-no-margin">
+                                {{(item | async)?.product_name}}-{{(item | async)?.brand}}
+                            </ion-card-title>
                         </ion-card-header>
-                        <ion-card-content>
-                        P ost body
+                        <ion-card-content class="ion-no-margin">
+                            <ng-container *ngIf="(item | async) as item">
+                                <ion-list-header lines="line" class="ion-no-padding">
+                                    <ion-chip [style.background]="'#fff'">
+                                        <ion-avatar class="post_avatar">
+                                        <img src="../../../assets/icons/profilFemal.svg">
+                                        </ion-avatar>
+                                        <ion-label class="post_label">{{item.username}}</ion-label>
+                                    </ion-chip>
+                                </ion-list-header>
+                                <p class="post-text"><b>{{item.product_name}}, {{item.brand}}.</b> {{item.feed[0]?.body}}</p>
+                               
+                                <ion-text color="primary"><p class="comment-text" (click)="openModal(item)">Voir tous les feeds</p></ion-text>
+                                <ion-item (click)="presentPopover($event,item)" lines="none">
+                                    <ion-avatar class="comment_avatar" slot="start">
+                                        <img [src]="'../../../assets/images/users/'+user.photoUrl" />
+                                    </ion-avatar>
+                                    <ion-label>
+                                        <ion-text color="medium">
+                                            <p class="comment-text">Ajouter un feed</p>
+                                        </ion-text>
+                                    </ion-label>
+                                </ion-item>
+                            </ng-container>
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
-            </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>

@@ -1,0 +1,18 @@
+<ion-content>
+    <ion-grid>
+        <ion-row class="ion-no-padding">
+            <ion-col size="12">
+            <ion-text><h2>Ask pros</h2></ion-text>
+               <ion-list class="ion-no-padding">
+                   <ion-item *ngFor="let proUser of proUsers" lines="none" class="ion-text-center ion-no-padding">
+                       <ion-avatar slot="start">
+                           <img [src]="'./assets/images/users/' + proUser.imageUrl" />
+                       </ion-avatar>
+                       <ion-label><p>{{proUser.username}}</p></ion-label>
+                   </ion-item>
+               </ion-list>
+            </ion-col>
+        </ion-row>
+        <hr>
+    </ion-grid>
+</ion-content>

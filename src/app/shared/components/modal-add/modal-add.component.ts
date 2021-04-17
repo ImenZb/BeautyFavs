@@ -22,6 +22,7 @@ export class ModalAddComponent implements OnInit {
                 'peaux-normales','cheveux','masque','corps','rasage','mains'];
   form: FormGroup;
   user: IUser;
+  items:string[]=[];
   constructor(public modatCtrl:ModalController,
               private formBuilder: FormBuilder,
               private serviceProduitFB: ProductService,
@@ -36,6 +37,21 @@ export class ModalAddComponent implements OnInit {
       tag: ['',Validators.required],
       category: ['',Validators.required]
     });
+  }
+
+  inputChanged($event){
+    const value = $event.target.value;
+    if(value.length <=0){
+      this.items = [];
+      return;
+    }
+    this.items = this.tags.filter(element => element.toLocaleLowerCase().includes(value.toLocaleLowerCase()))
+  }
+
+  selected(item, input){
+    input.value = '';
+    this.form.patchValue({tag:item});
+    this.items = [];
   }
 
   onSubmit(){

@@ -1,10 +1,3 @@
-.img-wrapper {
-    min-height: 400px;
-    width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    vertical-align:middle;
-}
 
 ion-toolbar{
     --min-height:300px!important;
@@ -15,6 +8,7 @@ ion-buttons{
     top: 40px;
     left: 10px;
 }
+
 h2{
     font-weight: bold;
     color: #6E6E6E;
@@ -27,3 +21,35 @@ p{
     margin-bottom: 0;
     font-size: 12px;
 }
+
+.bookmark{
+    position: absolute;
+    right: 5px;
+}
+
+ion-card-header{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+ion-chip{
+    padding-left: 8px;
+}
+
+
+.post-text {
+    font-size: 13px;
+    margin: 0px 6px 4px 6px;
+ }
+ 
+ .comment-text {
+    font-size: 12px;
+    margin: 0px 6px 4px 6px;
+    color: var(--ion-color-medium);
+ }
+ 
+ .comment_avatar{
+     padding: 1px;
+     height: 40px;
+     width: 40px;
+  }

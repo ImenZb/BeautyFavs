@@ -1,0 +1,34 @@
+ion-list {
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+ion-item {
+  //overflow-x: scroll;
+  width: 100px;
+  display: inline-block;
+}
+
+ion-avatar {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin-right: 0;
+  border: 2px solid var(--ion-color-new);
+}
+
+ion-label {
+  margin-top: 100px;
+}
+
+p {
+  font-size: 11px;
+  text-align: center;
+  margin: 4px 0px 0px 0px;
+  font-weight: 600;
+}
+
+hr {
+  height: 2px !important;
+  width: 100% !important;
+  background: #d5d5d5 !important;
+}

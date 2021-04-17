@@ -13,3 +13,12 @@
     left: -1px!important;
     bottom: 0px;
   }
+
+  :root {
+    --ion-color-new: #f51987;
+    --ion-color-new-rgb: 245,25,135;
+    --ion-color-new-contrast: #ffffff;
+    --ion-color-new-contrast-rgb: 255,255,255;
+    --ion-color-new-shade: #d81677;
+    --ion-color-new-tint: #f63093;
+  }

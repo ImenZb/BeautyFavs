@@ -3,7 +3,7 @@ import { IPost } from "./post";
 export interface IProduit {
     id?:string;
     product_name:string;
-    brands:string;
+    brand:string;
     category:string;
     tag:string;
     imageUrl?:string;
@@ -16,7 +16,7 @@ export interface IProduit {
 export class Produit implements IProduit{
     id?:string;
     product_name:string;
-    brands:string;
+    brand:string;
     category:string;
     tag:string;
     imageUrl?:string;

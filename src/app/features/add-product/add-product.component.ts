@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/shared/components/modal-add/modal-add.component';
 
@@ -7,11 +7,14 @@ import { ModalAddComponent } from 'src/app/shared/components/modal-add/modal-add
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent implements OnInit, AfterViewInit {
 
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit(): void {
+    
+  }
+  ngAfterViewInit(){
     this.openModal();
   }
 
