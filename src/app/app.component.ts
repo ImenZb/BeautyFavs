@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IUser } from './interfaces/user';
+
+
 
 
 @Component({

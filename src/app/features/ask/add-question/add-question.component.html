@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar class="ion-no-padding">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-padding">
+      <h1 class="ion-text-capitalize">Add question</h1>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClick()">
+        <ion-icon slot="start" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2">
+        <ion-button (click)="saveImageUrl()">
+          <ion-icon slot="icon-only" name="camera"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="10">
+        <ion-item>
+          <ion-label position="stacked">Question</ion-label>
+          <ion-textarea rows="3" cols="20" [(ngModel)]="textQuestion" placeholder="Enter your question here..."
+            required></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="6" 
+          *ngFor="let photo of photos">
+            <ion-img [src]="photo.webPath"></ion-img>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>    
+            <ion-list-header>
+              <ion-label>Category interest</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Biologique</ion-label>
+              <ion-checkbox (ionChange)="addCategory($event)" value="biologique"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Paramedical</ion-label>
+              <ion-checkbox (ionChange)="addCategory($event)" value="paramedical"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Industriel</ion-label>
+              <ion-checkbox (ionChange)="addCategory($event)" value="industriel"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Artisanal</ion-label>
+              <ion-checkbox (ionChange)="addCategory($event)" value="artisanal"></ion-checkbox>
+            </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">Select tag</ion-label>
+          <ion-input [(ngModel)]="selectedTag" (ionInput)="inputChanged($event)" type="text" #inputTag>
+          </ion-input>
+          <ion-list [hidden]="items.length <= 0">
+            <ion-item *ngFor="let item of items" (click)="selected(item,inputTag)">
+              {{item}}
+            </ion-item>
+          </ion-list>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

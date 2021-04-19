@@ -13,7 +13,7 @@ ion-avatar {
   width: 80px;
   height: 80px;
   margin-right: 0;
-  border: 2px solid var(--ion-color-new);
+  border: 3px solid #fff;
 }
 
 ion-label {
@@ -27,8 +27,3 @@ p {
   font-weight: 600;
 }
 
-hr {
-  height: 2px !important;
-  width: 100% !important;
-  background: #d5d5d5 !important;
-}
