@@ -8,6 +8,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { PopoverCommentComponent } from 'src/app/shared/components/popover-comment/popover-comment.component';
 import { ModalCommentComponent } from 'src/app/shared/components/modal-comment/modal-comment.component';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ProductListService } from 'src/app/services/product-list.service';
 //import { ProductService } from 'src/app/servicesFirebase/product.service'
 @Component({
   selector: 'app-home',
@@ -16,7 +17,9 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class HomeComponent implements OnInit {
   products: Observable<IProduit[]>;
-  productList: Observable<IProduit[]>;//from Firebase
+  productList$: Observable<IProduit[]>;//from Firebase
+  tag$:Observable<string>;
+  category$:Observable<string>;
   filtered:boolean = false;
   category:string='all';
   searchTag:string=null;
@@ -43,15 +46,12 @@ export class HomeComponent implements OnInit {
               private userService: UserService,
               public popoverController: PopoverController,
               public modalController: ModalController,
-              private db: AngularFireDatabase) { }
+              private _productListService: ProductListService) { }
 
   ngOnInit(): void {
-    this.products = this.serviceProduct.getAll();
-    /*Angular firebase
-    this.productList = this.db.list('product').snapshotChanges.pipe(
-      map(changes => changes.map(c =>
-        ({ key: c.payload.key, ...c.payload.val() })
-      )))*/
+    //this.products = this.serviceProduct.getAll();
+    /*Angular firebase*/
+    this.productList$ = this._productListService.getProducts();
   }
   async presentPopover(ev: any,product) {
     const popover = await this.popoverController.create({
@@ -80,49 +80,10 @@ export class HomeComponent implements OnInit {
   }
 
   segmentChanged(event){
-    this.searchTag = event.detail.value;
-    if(this.searchTag !== 'null'){
-      this.filtered = true;
-      if(this.category !== 'all'){
-        this.filteredList = this.serviceProduct.getByTagCategory(this.category,this.searchTag);
-        //in category != all && tag !=all'
-      }else{
-        this.filteredList = this.serviceProduct.getByTag(this.searchTag);
-        //in category all && tag != all'
-      }   
-    }else{
-      this.filtered = false;
-      if(this.category === 'all'){
-        //in category = all && tag = all
-        this.products = this.serviceProduct.getAll();
-      }else{
-        //in category != all && tag = all'
-        this.products = this.serviceProduct.getByCategory(this.category);
-      } 
-    }
+    this._productListService.setTag(event.detail.value);
   }
 
   onChange(event){
-    this.category = event.target.value;
-    switch (true) {
-      case (this.searchTag === null && this.category === 'all'):
-        //searchtag all et categorie all
-        this.products = this.serviceProduct.getAll();
-        break;
-      case (this.searchTag !== null && this.category !== 'all'):
-        //searchtag et category != all
-        this.filteredList = this.serviceProduct.getByTagCategory(this.category,this.searchTag);
-        break;
-      case (this.searchTag !== null && this.category === 'all'):
-        //searchtag !=all et category = all
-        this.filteredList = this.serviceProduct.getByTag(this.searchTag);
-        break;
-      case (this.searchTag === null && this.category !== 'all'):
-        //searchtag est all et category!= all
-        this.products = this.serviceProduct.getByCategory(this.category);
-        break;
-      default:
-        break;
-    }
+    this._productListService.setCategory(event.target.value);
   }
 }

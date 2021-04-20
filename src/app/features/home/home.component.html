@@ -34,8 +34,14 @@
         <ion-row class="ion-no-padding">
             <ion-col size="12" class="ion-no-padding">
                 <ion-list class="ion-no-padding">
-                    <div *ngFor="let product of ((filtered?filteredList:products) | async)">
+                    <div *ngFor="let product of (productList$ | async)">
                         <ion-card class="ion-no-padding ion-no-margin">
+                            <ion-item class="brandItem">
+                                <ion-label class="ion-no-margin">
+                                    <h2 class="ion-no-margin">{{product.product_name}}</h2>
+                                    <p>{{product.brand}}</p>
+                                </ion-label>
+                            </ion-item>
                             <img class="post_img" [src]="product.image_url"/>
                             <ion-card-header class="ion-no-padding ion-no-margin">
                                 <ion-button fill="clear" shape="round" size="small">
@@ -55,7 +61,7 @@
                                         <ion-label class="post_label">{{product.username}}</ion-label>
                                     </ion-chip>
                                 </ion-list-header>
-                                <p class="post-text"><b>{{product.product_name}}, {{product.brand}}.</b> {{product.feed[0]?.body}}</p>
+                                <p class="post-text"><b>{{product.product_name}}, {{product.brand}}.</b> posts to do</p>
                                 <p class="comment-text" (click)="openModal(product)">Voir les commentaires</p>
                                 <ion-item (click)="presentPopover($event,product)">
                                     <ion-avatar class="comment_avatar" slot="start">

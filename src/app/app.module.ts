@@ -11,16 +11,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AddProductComponent } from './features/add-product/add-product.component';
-
-export const firebaseConfig = {
-    apiKey: "AIzaSyAmSZ1OeD4NfMNlTRdRglJbGsfVRy6oDEY",
-    authDomain: "beautyfavs-1c038.firebaseapp.com",
-    projectId: "beautyfavs-1c038",
-    storageBucket: "beautyfavs-1c038.appspot.com",
-    messagingSenderId: "697793655537",
-    appId: "1:697793655537:web:d2014383f301068b09ef50",
-    measurementId: "G-LYWD56HGCY"
-};
+import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -32,7 +24,8 @@ export const firebaseConfig = {
     AppRoutingModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule
