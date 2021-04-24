@@ -1,0 +1,53 @@
+<ion-content>
+          <h3>Create your account!</h3>
+      
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="input-group">
+            <ion-item>
+              <ion-label position="floating" for="firstName">First Name</ion-label>
+              <ion-input type="text" formControlName="firstName"></ion-input>
+            </ion-item>
+            <div *ngIf="submitted && f.firstName.errors" class="errors">
+              <div *ngIf="f.firstName.errors.required">First Name is required</div>
+            </div>
+            <ion-item>
+              <ion-label position="floating" for="lastName">Last Name</ion-label>
+              <ion-input type="text" formControlName="lastName"></ion-input>
+            </ion-item>
+            <div *ngIf="submitted && f.lastName.errors" class="errors">
+              <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+            </div>
+            <ion-item>
+              <ion-label position="floating" for="email">Email</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <div *ngIf="submitted && f.lastName.errors" class="errors">
+              <div *ngIf="f.email.errors.required">Last Name is required</div>
+            </div>
+            <ion-item>
+              <ion-label position="floating" for="username">Username</ion-label>
+              <ion-input type="text" formControlName="username"></ion-input>
+            </ion-item>
+            <div *ngIf="submitted && f.username.errors" class="errors">
+              <div *ngIf="f.username.errors.required">Username is required</div>
+            </div>
+            <ion-item>
+              <label position="floating" for="password">Password</label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+            <div *ngIf="submitted && f.password.errors" class="errors">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+            </div>
+          </div>
+          <ion-button type="submit" expand="block">
+            Register
+          </ion-button>
+          <ion-button routerLink="/login" type="button" expand="block" color="primary" fill="clear">Cancel
+          </ion-button>
+          <ion-button routerLink="/login" type="button" expand="block" color="primary" fill="clear">
+            <span>Already have an account? <span class="redirect" routerLink="/login">Log In</span></span>
+          </ion-button>
+        </form>
+      
+</ion-content>

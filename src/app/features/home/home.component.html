@@ -1,83 +1,91 @@
-
 <ion-header>
-    <ion-toolbar class="ion-no-padding">
-        <ion-title class="ion-no-padding">
-            <h1 class="ion-text-capitalize">BeautyFavs</h1>
-        </ion-title>
-        <ion-buttons slot="end" class="ion-no-padding">
-          <ion-button color="dark">
-            <ion-item>
-                <ion-select (ionChange)="onChange($event)" ok-text="Ok" cancel-text="Cancel" value="all">
-                  <ion-select-option value="all">All</ion-select-option>
-                  <ion-select-option value="paramedical">Paramedical</ion-select-option>
-                  <ion-select-option value="biologique">Biologique</ion-select-option>
-                  <ion-select-option value="artisanal">Artisanal</ion-select-option>
-                  <ion-select-option value="industriel">Industriel</ion-select-option>
-                </ion-select>
-            </ion-item>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-      <ion-toolbar color="light">
-        <ion-segment (ionChange)="segmentChanged($event)" color="medium" value="null" class="ion-no-margin" scrollable>
-            <ion-segment-button class="ion-no-padding" value="null">
-              <ion-label>All</ion-label>
-            </ion-segment-button>
-            <ion-segment-button class="ion-no-padding" color="medium" *ngFor="let tag of tags.sort()" [value]="tag" layout="icon-start">
-                <ion-label>{{tag}}</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-      </ion-toolbar>
+  <ion-toolbar class="ion-no-padding">
+    <ion-title class="ion-no-padding">
+      <h1 class="ion-text-capitalize">BeautyFavs</h1>
+    </ion-title>
+    <ion-buttons slot="end" class="ion-no-padding">
+      <ion-button color="dark">
+        <ion-item>
+          <ion-select (ionChange)="onChange($event)" ok-text="Ok" cancel-text="Cancel" value="all">
+            <ion-select-option value="all">All</ion-select-option>
+            <ion-select-option value="paramedical">Paramedical</ion-select-option>
+            <ion-select-option value="biologique">Biologique</ion-select-option>
+            <ion-select-option value="artisanal">Artisanal</ion-select-option>
+            <ion-select-option value="industriel">Industriel</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" color="medium" value="null" class="ion-no-margin SwipedTabs-tabs ion-text-capitalize" scrollable>
+      <ion-segment-button class="ion-no-padding" value="null">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button class="ion-no-padding" color="medium" *ngFor="let tag of tags.sort()" [value]="tag"
+        layout="icon-start">
+        <ion-label>{{tag}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-grid class="ion-no-padding">
-        <ion-row class="ion-no-padding">
-            <ion-col size="12" class="ion-no-padding">
-                <ion-list class="ion-no-padding">
-                    <div *ngFor="let product of (productList$ | async)">
-                        <ion-card class="ion-no-padding ion-no-margin">
-                            <ion-item class="brandItem">
-                                <ion-label class="ion-no-margin">
-                                    <h2 class="ion-no-margin">{{product.product_name}}</h2>
-                                    <p>{{product.brand}}</p>
-                                </ion-label>
-                            </ion-item>
-                            <img class="post_img" [src]="product.image_url"/>
-                            <ion-card-header class="ion-no-padding ion-no-margin">
-                                <ion-button fill="clear" shape="round" size="small">
-                                    <ion-icon  name="heart-outline" slot="start"></ion-icon>
-                                </ion-button>
-                                <ion-button class="bookmark" fill="clear" shape="round" size="small">
-                                    <ion-icon name="bookmark-outline"></ion-icon>
-                                </ion-button>
-                            </ion-card-header>
-                            <ion-card-content class="ion-no-padding ion-no-margin">
-                                <p class="post-text"><b>{{product.likes}} likes</b></p>
-                                <ion-list-header lines="line" class="ion-no-padding">
-                                    <ion-chip [style.background]="'#fff'">
-                                        <ion-avatar class="post_avatar">
-                                        <img src="../../../assets/icons/profilFemal.svg">
-                                        </ion-avatar>
-                                        <ion-label class="post_label">{{product.username}}</ion-label>
-                                    </ion-chip>
-                                </ion-list-header>
-                                <p class="post-text"><b>{{product.product_name}}, {{product.brand}}.</b> posts to do</p>
-                                <p class="comment-text" (click)="openModal(product)">Voir les commentaires</p>
-                                <ion-item (click)="presentPopover($event,product)">
-                                    <ion-avatar class="comment_avatar" slot="start">
-                                        <img [src]="'../../../assets/images/users/'+user.photoUrl" />
-                                    </ion-avatar>
-                                    <ion-label>
-                                        <ion-text color="medium">
-                                            <p class="comment-text">Ajouter un commentaire</p>
-                                        </ion-text>
-                                    </ion-label>
-                                </ion-item>
-                            </ion-card-content>
-                        </ion-card>
-                    </div>
-                </ion-list>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col size="12" class="ion-no-padding">
+        <ion-list class="ion-no-padding">
+          <ion-card *ngFor="let product of (productList$ | async)?.slice(min,max)" class="ion-margin-bottom">
+            <ion-item class="brandItem">
+              <ion-label class="ion-no-margin">
+                <h2 class="ion-no-margin ion-text-capitalize name">{{product.product_name}}</h2>
+                <ion-text color="primary">
+                  <p class="ion-text-capitalize">{{product.brand}}</p>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+            <img class="post_img" [src]="product.image_url" />
+            <ion-card-header class="ion-no-padding ion-no-margin">
+              <ion-button fill="clear" shape="round" size="small" class="ion-no-padding ion-no-margin">
+                <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+                <ion-note>{{product.likes}}</ion-note>
+              </ion-button>
+              <ion-button class="bookmark" fill="clear" shape="round" size="small">
+                <ion-icon name="bookmark-outline"></ion-icon>
+              </ion-button>
+            </ion-card-header>
+            <ion-card-content class="ion-no-padding ion-no-margin">
+              <ion-list-header lines="line" class="ion-no-padding">
+                <ion-chip [style.background]="'#fff'">
+                  <ion-avatar class="post_avatar">
+                    <img src="../../../assets/icons/profilFemal.svg">
+                  </ion-avatar>
+                  <ion-label class="post_label">{{product.username}}, 
+                  </ion-label>
+                  <ion-note><p class="post-text">posts to do</p></ion-note>
+                </ion-chip>
+              </ion-list-header>
+             
+              <p class="comment-text1" (click)="openModal(product)">Voir tous les feeds</p>
+              <ion-item (click)="presentPopover($event,product)" lines="none">
+                <ion-avatar class="comment_avatar" slot="start">
+                  <img [src]="'../../../assets/images/users/'+user.photoUrl" />
+                </ion-avatar>
+                <ion-label>
+                  <ion-text color="medium">
+                    <p class="comment-text2">Ajouter un feed</p>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+            <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="Loading more data...">
+            </ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

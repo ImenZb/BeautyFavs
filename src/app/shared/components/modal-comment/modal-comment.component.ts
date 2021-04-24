@@ -33,7 +33,7 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
 
   async ngAfterViewInit():Promise<void>{
     await Promise.all(this.produitFeed.map(async (element) => {
-      const data = await this.get(element.postId).toPromise();
+      const data = ''//await this.get(element.postId).toPromise();
       this.postList.push(data);
       return element;
     })); 
@@ -43,7 +43,7 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
   }
 
 
-  get(postId){
+ /* get(postId){
     return forkJoin([this.servicePost.getById(postId),
                 this.serviceUser.get()])
       .pipe(
@@ -52,7 +52,7 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
         }
         )
       )
-  }
+  }*/
 
 
   closeModal() {

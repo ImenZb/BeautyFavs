@@ -1,29 +1,71 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IUser } from '../interfaces/user';
+import firebase from 'firebase/app';
+import { Router } from '@angular/router';
 
-const apiUrl = 'http://localhost:3000/users';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private _af:AngularFirestore,
+              private _auth:AngularFireAuth,
+              private _router: Router) { }
 
-  get():Observable<IUser[]>{
-    return this.http.get<IUser[]>(apiUrl);
+  registerWithEmailPwd(userInput: Partial<IUser> & {password:string}){
+      this._auth.createUserWithEmailAndPassword(userInput.email,userInput.password).then(
+        res => {
+          const uid = res.user.uid;
+          const user = {
+                        uid,
+                        lastName:userInput.lastName,
+                        firstName:userInput.firstName,
+                        username:userInput.username,
+                        email:userInput.email
+                      }
+          this._SetUserData(user);
+        }
+      )
   }
+
+  GoogleAuth() {
+    this.AuthLogin(new firebase.auth.GoogleAuthProvider());
+  }  
+
+  // Auth logic to run auth providers
+  AuthLogin(provider) {
+    this._auth.signInWithPopup(provider)
+    .then((result) => {
+     const user : Partial<IUser> = {
+                                      username: result?.user.displayName,
+                                      email: result?.user.email,
+                                      uid: result?.user.uid,
+                                      photoUrl: result?.user.photoURL                                                         
+                                    }
+          this._af.doc(`users/${user.uid}`).set(user, {merge: true});
+          this._router.navigate(['home']);
+    }).catch((error) => {
+      window.alert(error);
+    })
+  }
+ private _SetUserData(user: Partial<IUser>) {
+    const userRef: AngularFirestoreDocument<any> = this._af.doc(`users/${user.uid}`);
+    const userData: Partial<IUser> = {
+      uid: user.uid,
+      email: user.email,
+      username: user.username,
+      lastName: user.lastName
+    }
+    return userRef.set(userData, {
+      merge: true
+    })
+  }
+
   
-  getAuthor(id:string): Observable<any> {
-    return this.http.get<any>(apiUrl+ `/${id}`);
-  }
-
-  getAuthorByUsername(username:string){
-    return this.http.get<IUser[]>(apiUrl).pipe(
-      map(users => users.find(a => a.username === username))
-    );
-  }
 }

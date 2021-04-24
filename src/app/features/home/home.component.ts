@@ -16,6 +16,8 @@ import { ProductListService } from 'src/app/services/product-list.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  min = 0;
+  max = 10;
   products: Observable<IProduit[]>;
   productList$: Observable<IProduit[]>;//from Firebase
   tag$:Observable<string>;
@@ -26,15 +28,12 @@ export class HomeComponent implements OnInit {
   filteredList: Observable<IProduit[]>;
   post: Observable<any>;
   user: IUser = {
-    "id": 10,
-    "name": "Clementina DuBuque",
+    "uid": "10",
+    "firstName": "Clementina DuBuque",
+    "lastName": "DuBuque",
     "username": "Moriah.Stanton",
     "email": "Rey.Padberg@karina.biz",
-    "address": {
-      "street": "Kattie Turnpike",
-      "city": "Lebsackbury",
-      "zipcode": "31428-2261"
-    },
+    "role": "member",
     "photoUrl":"10.jpg"
   };
 
@@ -85,5 +84,10 @@ export class HomeComponent implements OnInit {
 
   onChange(event){
     this._productListService.setCategory(event.target.value);
+  }
+
+  loadData($event){
+    this.max = this.max + 10;
+    $event.target.complete();
   }
 }

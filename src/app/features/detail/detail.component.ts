@@ -18,15 +18,12 @@ export class DetailComponent implements OnInit {
   item: Observable<IProduit>;
   id:string;
   user: IUser = {
-    "id": 10,
-    "name": "Clementina DuBuque",
+    "uid": "10",
+    "firstName": "Clementina",
+    "lastName": "DuBuque",
     "username": "Moriah.Stanton",
     "email": "Rey.Padberg@karina.biz",
-    "address": {
-      "street": "Kattie Turnpike",
-      "city": "Lebsackbury",
-      "zipcode": "31428-2261"
-    },
+    "role": "member",
     "photoUrl":"10.jpg"
   };
   constructor(private serviceProduit: ProductService,
