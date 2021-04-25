@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { PopoverController } from '@ionic/angular';
 import { IProduit } from 'src/app/interfaces/produit';
 import { IUser } from 'src/app/interfaces/user';
@@ -12,10 +13,12 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class PopoverCommentComponent implements OnInit {
   @Input() product: IProduit; //product related to the post
-  @Input() user: IUser; // connected user
+  @Input() user$: IUser; // connected user
+ 
   constructor(private popoverController: PopoverController,
               private serviceProduit: ProductService,
-              private servicePost: PostService) { }
+              private _auth: AngularFireAuth,
+              private _postService: PostService) { }
 
   ngOnInit(): void {
   }
@@ -27,20 +30,19 @@ export class PopoverCommentComponent implements OnInit {
 
   //save comment in DB and close popover
   async sendComment(input){
-    let latestPostId = this.product.feed[this.product.feed.length - 1].postId;
-    this.product.feed.push({postId: latestPostId + 1, body: input.value});
-    await this.serviceProduit.update(this.product).toPromise();
-    await this.servicePost.create({
-                                username: this.user.username,
-                                productName: this.product.product_name, 
-                                body: input.value,
-                                date: new Date()
-                              }).toPromise();
+    //prepare data
+    const {uid = null} = await this._auth.currentUser
+    const data = {
+      uid,
+      productId: this.product.id, 
+      body: input.value
+    }
+    //save data
+    this._postService.save(data);
+    //close popover
     this.popoverController.dismiss();
   }
 
-  //add post to firebase
-  
   ClosePopover() {
     this.popoverController.dismiss();
   }

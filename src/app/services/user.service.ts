@@ -67,5 +67,11 @@ export class UserService {
     })
   }
 
+  getByUid(uid:string): Observable<Partial<IUser>>{
+    return this._af.doc('users/'+ uid).valueChanges();
+  }
   
+  getAll(){
+    return this._af.collection<IUser>('users').valueChanges();
+  }
 }

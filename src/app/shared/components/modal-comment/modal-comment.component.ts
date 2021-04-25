@@ -15,64 +15,30 @@ import { PopoverCommentComponent } from '../popover-comment/popover-comment.comp
   styleUrls: ['./modal-comment.component.scss']
 })
 export class ModalCommentComponent implements OnInit,AfterViewInit {
-  produitFeed: [{postId:number,body:string}];
-  user:IUser;
+  user$:IUser;
   produit:IProduit;
-  postList:any[]=[];
   @ViewChild('content',{static:true,read:ElementRef}) ionContent:ElementRef<HTMLIonContentElement>;
-
-  constructor(private servicePost: PostService,
+  posts$;
+  constructor(private _postService: PostService,
               private serviceUser: UserService,
               public modalController: ModalController,
               public popoverController: PopoverController) { }
 
-  ngOnInit(): void {
-      
-      
-  }
+  ngOnInit(): void {}
 
   async ngAfterViewInit():Promise<void>{
-    await Promise.all(this.produitFeed.map(async (element) => {
-      const data = ''//await this.get(element.postId).toPromise();
-      this.postList.push(data);
-      return element;
-    })); 
+    this.posts$ = this._postService.getPostsByProduct(this.produit.id);
     setTimeout(() => {
       this.ionContent.nativeElement.scrollToBottom(250);
     }, 100);
   }
 
 
- /* get(postId){
-    return forkJoin([this.servicePost.getById(postId),
-                this.serviceUser.get()])
-      .pipe(
-        map(([post,users]) => {
-          return {body:post.body, ...users.find(user => user.username === post.username)}
-        }
-        )
-      )
-  }*/
-
-
   closeModal() {
     this.modalController.dismiss();
   }
 
-  async presentPopover(ev: any,product) {
-    const popover = await this.popoverController.create({
-      component: PopoverCommentComponent,
-      cssClass: 'custom-popover',
-      event: ev,
-      translucent: true,
-      showBackdrop: false,
-      componentProps: {
-        "product": product,
-        "user": this.user
-      }
-    });
-    return await popover.present();
-  }
+  
 
 
 }

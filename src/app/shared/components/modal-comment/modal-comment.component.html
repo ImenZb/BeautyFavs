@@ -13,7 +13,7 @@
         <ion-row>
             <ion-col size="12">
                 <ion-list>
-                    <ion-item *ngFor="let post of postList">
+                    <ion-item *ngFor="let post of posts$ | async">
                         <ion-avatar slot="start">
                             <img [src]="'../../../../assets/images/users/'+post.photoUrl"/>
                         </ion-avatar>
@@ -29,6 +29,6 @@
 </ion-content>
 <ion-footer>
     <ion-toolbar>
-        <app-popover-comment [product]="produit" [user]="user"></app-popover-comment>
+        <app-popover-comment [product]="produit" [user$]="user$"></app-popover-comment>
     </ion-toolbar>
 </ion-footer>
