@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 import { PostService } from 'src/app/services/post.service';
 import { LikeService } from 'src/app/services/like.service';
 import { first } from 'rxjs/operators';
+import { FavService } from 'src/app/services/fav.service';
 
 @Component({
   selector: 'app-home',
@@ -31,9 +32,14 @@ export class HomeComponent implements OnInit {
   tags:string[]=['anti-acne','anti-rides','anti-rougeurs','anti-UV','bronzant',
                 'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
                 'peaux-normales','cheveux','masque','corps','rasage','mains'];
+  
   private _isLiked$ = new Subject<boolean>()
   isLiked$= this._isLiked$.asObservable();
   likesCount:Observable<number>;
+  
+  private _isFav$ = new Subject<boolean>();
+  isFav$ = this._isFav$.asObservable();
+
   constructor(
               private _auth: AngularFireAuth,
               private _userService: UserService,
@@ -41,7 +47,8 @@ export class HomeComponent implements OnInit {
               public modalController: ModalController,
               private _productListService: ProductListService,
               private _postService: PostService,
-              private _likeService: LikeService
+              private _likeService: LikeService,
+              private _favService: FavService
               ) {
                 
                }
@@ -88,23 +95,41 @@ export class HomeComponent implements OnInit {
     this.max = this.max + 10;
     $event.target.complete();
   }
-
-  async toggle(item: IProduit) {
+  // Like actions
+  async toggleLike(item: IProduit) {
     const isLiked = await this._likeService.isLiked(item.id).pipe(first()).toPromise();
     if (!isLiked) {
-      await this.add(item.id);
+      await this.addLike(item.id);
     } else {
-      await this.remove(item.id);
+      await this.removeLike(item.id);
     }
     this._isLiked$.next(!isLiked);
   }
 
-  async add(id: string) {
+  async addLike(id: string) {
     await this._likeService.add({id});
   }
 
-  async remove(id: string) {
+  async removeLike(id: string) {
     await this._likeService.remove(id);
   }
-  
+
+  // Fav actions 
+  async toggleFav(item: IProduit) {
+    const isFav = await this._favService.isFav$(item.id).pipe(first()).toPromise();
+    if (!isFav) {
+      await this.addFav(item.id);
+    } else {
+      await this.removeFav(item.id);
+    }
+    this._isFav$.next(!isFav);
+  }
+
+  async addFav(id: string) {
+    await this._favService.add({id});
+  }
+
+  async removeFav(id: string) {
+    await this._favService.remove(id);
+  }
 }
