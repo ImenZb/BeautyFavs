@@ -14,6 +14,7 @@ import { AddProductComponent } from './features/add-product/add-product.componen
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -95,25 +95,35 @@ export class PostService {
     return this.http.put<IPost>(apiUrl + '/' + post.id, post);
   }
 
-  getFirstPostsByProduct(productid: string) {
-    return combineLatest([
-      this._af
-        .collection<IPost>('posts', (ref) =>
-          ref.where('productId', '==', productid)
-        )
-        .valueChanges(),
-      this._userService.getAll(),
-    ]).pipe(first(),
-      map(([posts, users]) => {
-        //get first post and add user info related to post
-        const uid = posts[0].uid;
-        const user = users.filter((user) => (user.uid = uid));
-        return {
-          ...posts[0],
-          username: user[0]?.username,
-          photoUrl: user[0]?.photoUrl,
-        };
-      })
-    );
+  //get the first feed related to the product
+  async getFirstPostsByProduct(productid: string) {
+
+    const posts = await this._af
+      .collection<IPost>('posts', (ref) =>
+        ref.where('productId', '==', productid)
+      )
+      .valueChanges().pipe(first())
+      .toPromise();
+    if(posts.length <= 0) return;
+    const uid = posts[0].uid;
+    const user = await this._userService.getByUid(uid).pipe(first()).toPromise();
+    
+    return {
+      ...posts[0],
+      username: user?.username,
+      photoUrl: user?.photoUrl,
+    };
   }
+
+  //check if user already have a feed related the product
+  async isUserFeed(uid: string, productid: string) {
+    const posts = await this._af
+      .collection<IPost>('posts', (ref) =>
+        ref.where('productId', '==', productid).where('uid', '==', uid)
+      )
+      .valueChanges().pipe(first())
+      .toPromise();
+    return posts.length > 0;
+  }
+
 }

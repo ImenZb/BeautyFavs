@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { IProduit } from 'src/app/interfaces/produit';
 import { IUser } from 'src/app/interfaces/user';
@@ -10,6 +10,8 @@ import { ProductListService } from 'src/app/services/product-list.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { PostService } from 'src/app/services/post.service';
+import { LikeService } from 'src/app/services/like.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -23,33 +25,23 @@ export class HomeComponent implements OnInit {
   productList$: Observable<IProduit[]>;//from Firebase
   tag$:Observable<string>;
   category$:Observable<string>;
-  filtered:boolean = false;
   category:string='all';
   searchTag:string=null;
-  filteredList: Observable<IProduit[]>;
   user$ : Observable<Partial<IUser>> ;
-  user: IUser = {
-    "uid": "10",
-    "firstName": "Clementina DuBuque",
-    "lastName": "DuBuque",
-    "username": "Moriah.Stanton",
-    "email": "Rey.Padberg@karina.biz",
-    "role": "member",
-    "photoUrl":"10.jpg"
-  };
-  posts$;
   tags:string[]=['anti-acne','anti-rides','anti-rougeurs','anti-UV','bronzant',
                 'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
                 'peaux-normales','cheveux','masque','corps','rasage','mains'];
-  getFirst = this._postService.getFirstPostsByProduct;
- 
+  private _isLiked$ = new Subject<boolean>()
+  isLiked$= this._isLiked$.asObservable();
+  likesCount:Observable<number>;
   constructor(
               private _auth: AngularFireAuth,
               private _userService: UserService,
               public popoverController: PopoverController,
               public modalController: ModalController,
               private _productListService: ProductListService,
-              private _postService: PostService
+              private _postService: PostService,
+              private _likeService: LikeService
               ) {
                 
                }
@@ -58,9 +50,6 @@ export class HomeComponent implements OnInit {
     this.productList$ = this._productListService.getProducts();
     const { uid = null} = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
-    const firstPost = await this._postService.getFirstPostsByProduct("727").toPromise();
-    console.log('---->',firstPost);
-    
   }
   async presentPopover(ev: any,product) {
     const popover = await this.popoverController.create({
@@ -99,4 +88,23 @@ export class HomeComponent implements OnInit {
     this.max = this.max + 10;
     $event.target.complete();
   }
+
+  async toggle(item: IProduit) {
+    const isLiked = await this._likeService.isLiked(item.id).pipe(first()).toPromise();
+    if (!isLiked) {
+      await this.add(item.id);
+    } else {
+      await this.remove(item.id);
+    }
+    this._isLiked$.next(!isLiked);
+  }
+
+  async add(id: string) {
+    await this._likeService.add({id});
+  }
+
+  async remove(id: string) {
+    await this._likeService.remove(id);
+  }
+  
 }

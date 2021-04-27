@@ -4,14 +4,12 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { IonicModule } from '@ionic/angular';
-
+import { FirstPipe } from 'src/app/pipes/first.pipe';
+import { LikesCountPipe } from 'src/app/pipes/likes-count.pipe';
+import { LikesInitPipe } from 'src/app/pipes/likes-init.pipe';
 
 @NgModule({
-  declarations: [HomeComponent],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    IonicModule
-  ]
+  declarations: [HomeComponent, FirstPipe, LikesCountPipe, LikesInitPipe],
+  imports: [CommonModule, HomeRoutingModule, IonicModule],
 })
-export class HomeModule { }
+export class HomeModule {}
