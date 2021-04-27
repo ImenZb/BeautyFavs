@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { IUser } from 'src/app/interfaces/user';
 import { ProductService } from 'src/app/servicesFirebase/product.service';
-import { tap } from 'rxjs/operators';
-import { PostService } from 'src/app/servicesFirebase/post.service';
 import { Produit } from 'src/app/interfaces/produit';
-import { PostsPerProductService } from 'src/app/servicesFirebase/posts-per-product.service';
+import { ProductListService } from 'src/app/services/product-list.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { PostService } from 'src/app/services/post.service';
+import { unescapeIdentifier } from '@angular/compiler';
 
 @Component({
   selector: 'app-modal-add',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -21,22 +21,24 @@ export class ModalAddComponent implements OnInit {
                 'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
                 'peaux-normales','cheveux','masque','corps','rasage','mains'];
   form: FormGroup;
-  user: IUser;
+  user;
   items:string[]=[];
   constructor(public modatCtrl:ModalController,
-              private formBuilder: FormBuilder,
-              private serviceProduitFB: ProductService,
-              private servicePost: PostService,
-              private servicePostsProduct: PostsPerProductService) { }
+              private _formBuilder: FormBuilder,
+              private _productListService: ProductListService,
+              private _postService: PostService,
+              private _auth: AngularFireAuth) { }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
+  async ngOnInit(): Promise<void> {
+    this.form = this._formBuilder.group({
       product_name: [this.productName,Validators.required],
       feed: ['',Validators.required],
       brand: ['',Validators.required],
       tag: ['',Validators.required],
       category: ['',Validators.required]
     });
+    this.user = await this._auth.currentUser;
+   
   }
 
   inputChanged($event){
@@ -55,23 +57,23 @@ export class ModalAddComponent implements OnInit {
   }
 
   onSubmit(){
-    let keyPost;
-    let KeyProduct;
-    const product = {...this.form.value, created_datetime: Date.now(), username:this.user?.username || '',
+    
+    const productId = Math.floor(Math.random()*1000).toString() + 'n';
+    const feed = this.form.get('feed').value;
+    const product_name = this.form.get('product_name').value;
+    const tag = this.form.get('tag').value;
+    const category = this.form.get('category').value;
+    const brand = this.form.get('brand').value;
+    const date: Date = new Date();
+    const product = {productId, product_name, brand, tag, category, created_datetime: date,
                     imageUrl:this.productImg, likes:0};
-    const post = {username:this.user?.username || '',
-                  body:product.feed,
-                  date:product.created_datetime}
-    //Products: add product
-    this.serviceProduitFB.create(product).then(data => {
-      KeyProduct = data.path.pieces_[1];
-      //Posts: add post with the product id
-        this.servicePost.create({...post,productId: KeyProduct}).then(data =>{
-          //PostsPerProduct: add post key as child of product key
-          keyPost = data.path.pieces_[1];
-          this.servicePostsProduct.create(KeyProduct, keyPost);
-        })
-    });
+    const uid:string = this.user?.uid;
+    const post = {uid,
+                  productId,
+                  body:feed,
+                  date}
+    this._productListService.create(product);
+    this._postService.save(post);
     this.modatCtrl.dismiss();
   }
 }

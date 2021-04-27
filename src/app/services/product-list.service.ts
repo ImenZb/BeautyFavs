@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { Produit } from '../interfaces/produit';
+import { IProduit, Produit } from '../interfaces/produit';
 
 @Injectable({
   providedIn: 'root'
@@ -80,17 +80,11 @@ export class ProductListService {
     this._category$.next(category);
   }
 
-  
-  //increment/decrement likes
-  async modifylike(id:string, n: number){
-    const FieldValue = firebase.firestore.FieldValue;
-    const product = await this._af.collection('products', ref => ref.where('id', '==',id))
-    .valueChanges({ idField: 'key' })
-    .pipe(first()).toPromise();
-    const key = product[0].key;
-    console.log('product',product[0]);
-    
-    this._af.collection('products', ref => ref.where('id', '==',id)).doc(key).update({ likes: FieldValue.increment(n) })
+  create(product){
+    this._af.collection('products').add(product);
   }
-  
+
+  getByID(id:string){
+    return this._af.collection('products', ref => ref.where('id', '==', id)).valueChanges();
+  }
 }

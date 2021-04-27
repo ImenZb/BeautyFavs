@@ -4,6 +4,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { IProduit } from 'src/app/interfaces/produit';
 import { IUser } from 'src/app/interfaces/user';
+import { ProductListService } from 'src/app/services/product-list.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ModalCommentComponent } from 'src/app/shared/components/modal-comment/modal-comment.component';
 import { PopoverCommentComponent } from 'src/app/shared/components/popover-comment/popover-comment.component';
@@ -15,7 +16,7 @@ import { PopoverCommentComponent } from 'src/app/shared/components/popover-comme
 })
 export class DetailComponent implements OnInit {
   @Input() produit:IProduit;
-  item: Observable<IProduit>;
+  item;
   id:string;
   user: IUser = {
     "uid": "10",
@@ -26,14 +27,17 @@ export class DetailComponent implements OnInit {
     "role": "member",
     "photoUrl":"10.jpg"
   };
-  constructor(private serviceProduit: ProductService,
+  constructor(
+    private _productListService: ProductListService,
               private routerA: ActivatedRoute,
               private popoverController: PopoverController,
-              private modalController: ModalController) { }
+              private modalController: ModalController
+              ) { }
 
   ngOnInit(): void {
     this.id = this.routerA.snapshot.params['id'];
-    this.item = this.serviceProduit.getById(this.id);
+    this.item = this._productListService.getByID(this.id);
+    //this.item = this.serviceProduit.getById(this.id);
   }
 
   

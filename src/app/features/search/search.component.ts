@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { GoogleService } from 'src/app/services/google.service';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, first, tap } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/shared/components/modal-add/modal-add.component';
 import { ProductService } from 'src/app/services/product.service';
 import { IProduit } from 'src/app/interfaces/produit';
 import { convertPropertyBindingBuiltins } from '@angular/compiler/src/compiler_util/expression_converter';
+import { ProductListService } from 'src/app/services/product-list.service';
+import { BrowserStack } from 'protractor/built/driverProviders';
 
 
 @Component({
@@ -23,6 +25,7 @@ export class SearchComponent implements OnInit {
 
   constructor(private serviceGoogle : GoogleService,
               private serviceProduit: ProductService,
+              private _productListService: ProductListService,
               public modalCtrl: ModalController) { }
 
   ngOnInit(): void { 
@@ -32,7 +35,7 @@ export class SearchComponent implements OnInit {
   filterList($event){
    this.query = $event.srcElement.value;
    this.isKeyEntered = true;
-   // this.results = this.serviceGoogle.getAll(this.query);
+   
    this.resultsGoogle = this.getGoogle();
    this.resultsLocal = this.getLocal();
   }
@@ -41,7 +44,7 @@ export class SearchComponent implements OnInit {
   getGoogle(): Observable<any[]>{
     return forkJoin([
       this.serviceGoogle.getAll(this.query),
-      this.serviceProduit.getAll()
+      this._productListService.productList$.pipe(first())
     ]).pipe(
       map(([produitsGoogle, produits]) =>{
         let resultGoogle:any[]=[];
@@ -63,7 +66,7 @@ export class SearchComponent implements OnInit {
   getLocal(): Observable<IProduit[]>{
     return forkJoin([
       this.serviceGoogle.getAll(this.query),
-      this.serviceProduit.getAll()
+      this._productListService.productList$.pipe(first())
     ]).pipe(
       map(([produitsGoogle, produits]) =>{
         let resultLocal:any[]=[];
@@ -72,11 +75,15 @@ export class SearchComponent implements OnInit {
             const produit = produits[index];
             const titleGoogle = produitGoogle.title.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
             const titleLocal = produit.product_name.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            titleGoogle.split('').for
             if(titleGoogle.includes(titleLocal)){
               resultLocal.push(produit);
             }
           }
         });
+        console.log('array',resultLocal)
+        console.log('set array',[...new Set(resultLocal)]);
+        
         return [...new Set(resultLocal)];
       })
     )
@@ -92,5 +99,15 @@ export class SearchComponent implements OnInit {
     await ionModal.present();
   }
 
+  isMatched(searchTerm:string,name:string){
+    let words = searchTerm.split(' ');
+    let isMatched = false;
+    for (let index = 0; index < words.length; index++) {
+      const word = words[index];
+      isMatched = name.includes(word);
+      if(isMatched)break;
+    }
+    return isMatched;
+  }
 
 }
