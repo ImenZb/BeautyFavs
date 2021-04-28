@@ -21,7 +21,7 @@
           <ion-avatar class="comment_avatar" slot="start">
             <img *ngIf="(user$ | async)?.photoUrl as photoURL; else default" [src]="photoURL" />
             <ng-template #default>
-              <img [src]="'../../../assets/images/users/profil_32.png'" />
+              <img [src]="'assets/images/users/profile_32.png'" />
             </ng-template>
           </ion-avatar>
           <ion-item class="inputComment">

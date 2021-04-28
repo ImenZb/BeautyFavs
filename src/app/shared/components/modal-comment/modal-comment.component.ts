@@ -18,16 +18,15 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
   user$:IUser;
   produit:IProduit;
   @ViewChild('content',{static:true,read:ElementRef}) ionContent:ElementRef<HTMLIonContentElement>;
-  posts$;
+  posts$: Observable<any>;
   constructor(private _postService: PostService,
               private serviceUser: UserService,
-              public modalController: ModalController,
-              public popoverController: PopoverController) { }
+              public modalController: ModalController) { }
 
   ngOnInit(): void {}
 
   async ngAfterViewInit():Promise<void>{
-    this.posts$ = this._postService.getPostsByProduct(this.produit.id);
+    this.posts$ = await this._postService.getPostsByProduct(this.produit.id);
     setTimeout(() => {
       this.ionContent.nativeElement.scrollToBottom(250);
     }, 100);

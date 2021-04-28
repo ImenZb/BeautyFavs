@@ -18,9 +18,11 @@
 }
 
 .post_label{
+   white-space: nowrap;
    font-size: 14px!important;
    font-weight: 700;
    color: #1e2023!important;
+   padding-left: 5px;
 }
 
 .post-text {
@@ -102,7 +104,15 @@ h2.name{
   border-radius: 50px;
    font-size: 12px;
    background-color: #f5f6f9;
+   position: relative;
+   ion-button{
+      position: absolute;
+      right: 5px;
+      top: 8px;
+   }
 }
+
+
 
 ion-item-divider{
    min-height: 1px;

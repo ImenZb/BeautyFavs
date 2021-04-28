@@ -44,22 +44,32 @@
                 </ion-text>
               </ion-label>
             </ion-item>
-            <img class="post_img" [src]="product.image_url"/>
+            <img class="post_img" [src]="product.image_url" />
             <ion-card-header class="ion-no-padding ion-no-margin">
-              <ion-button (click)="toggleLike(product)" fill="clear" shape="round" size="small" class="ion-no-padding ion-no-margin">
-                <ion-icon [name]="(isLiked$|async) ? 'heart' : 'heart-outline'" slot="icon-only"></ion-icon>
+
+              <ion-button (click)="toggleLike(product)" fill="clear" shape="round" size="small"
+                class="ion-no-padding ion-no-margin">
+                <ion-icon *ngIf="(isLiked$|async) !== null; else initLike"
+                  [name]="(isLiked$|async) ? 'heart' : 'heart-outline'" slot="icon-only"></ion-icon>
+                <ng-template #initLike>
+                  <ion-icon [name]="(product.id | likesInit | async)? 'heart' : 'heart-outline'" slot="icon-only">
+                  </ion-icon>
+                </ng-template>
                 <ion-note>{{product.id | likesCount | async}}</ion-note>
               </ion-button>
+              
               <ion-button (click)="toggleFav(product)" class="bookmark" fill="clear" shape="round" size="small">
-                <ion-icon [name]="(isFav$|async) ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+                <ion-icon *ngIf="(isFav$|async) !== null; else initFav"
+                  [name]="(isFav$|async) ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+                <ng-template #initFav>
+                  <ion-icon [name]="(product.id | favInit | async)? 'bookmark' : 'bookmark-outline'" slot="icon-only">
+                  </ion-icon>
+                </ng-template>
               </ion-button>
             </ion-card-header>
             <ion-card-content class="ion-no-padding ion-no-margin">
               <ion-list-header lines="line" class="ion-no-padding ion-no-margin">
-                <ion-chip [style.background]="'#fff'" *ngIf="(product.id | first |async) as post; else comment">
-                  <ion-avatar class="post_avatar">
-                    <img src="./assets/icons/profilFemal.svg">
-                  </ion-avatar>
+                <ion-chip class="ion-no-padding ion-no-margin" [style.background]="'#fff'" *ngIf="(product.id | first |async) as post; else comment">
                   <ion-label class="post_label">{{post.username}},
                   </ion-label>
                   <ion-note>
@@ -67,23 +77,23 @@
                   </ion-note>
                   <ion-button fill="clear" (click)="openModal(product)" size="small">
                     <span class="comment-text1">See all feeds</span>
-                  </ion-button> 
+                  </ion-button>
                 </ion-chip>
                 <ng-template #comment>
                   <ion-chip class="ion-text-center" [style.background]="'#fff'">
-                  <ion-button fill="clear" size="small" class="ion-no-padding ion-no-margin text center">
-                    <span class="comment-text1">0 feed</span>
-                  </ion-button>
-                </ion-chip>
+                    <ion-button fill="clear" size="small" class="ion-no-padding ion-no-margin text center">
+                      <span class="comment-text1">0 feed</span>
+                    </ion-button>
+                  </ion-chip>
                 </ng-template>
-              </ion-list-header> 
+              </ion-list-header>
               <ion-item-divider>
               </ion-item-divider>
-              <ion-item (click)="presentPopover($event,product)" lines="none" >
+              <ion-item (click)="presentPopover($event,product)" lines="none">
                 <ion-avatar class="comment_avatar" slot="start">
                   <img *ngIf="(user$ | async)?.photoUrl as photoURL; else default" [src]="photoURL" />
                   <ng-template #default>
-                    <img src="./assets/images/users/profil_32.png" />
+                    <img src="assets/images/users/profile_32.png" />
                   </ng-template>
                 </ion-avatar>
                 <ion-label class="inputComment ion-padding">
@@ -94,7 +104,7 @@
                     <ion-icon slot="end" name="send"></ion-icon>
                   </ion-button>
                 </ion-label>
-                
+
               </ion-item>
             </ion-card-content>
           </ion-card>

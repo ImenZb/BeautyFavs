@@ -41,8 +41,25 @@ export class PostService {
       });
   }
 
-  getPostsByProduct(productid: string) {
-    return combineLatest([
+  async getPostsByProduct(productid: string) {
+    const users = await this._userService.getAll().pipe(first()).toPromise();
+    console.log('---->users:',users);
+    return this._af
+        .collection<IPost>('posts', (ref) =>
+          ref.where('productId', '==', productid)
+        )
+        .valueChanges()
+        .pipe(
+        map(posts => {
+             //add users info related to post
+          return posts.map((post) => {
+            const uid = post.uid;
+            const user = users.filter((user) => (user.uid === uid));
+              return {...post, username: user[0]?.username, photoUrl: user[0]?.photoUrl };
+          })
+          }));
+        
+   /* return combineLatest([
       this._af
         .collection<IPost>('posts', (ref) =>
           ref.where('productId', '==', productid)
@@ -52,17 +69,17 @@ export class PostService {
     ]).pipe(
       map(([posts, users]) => {
         //add users info related to post
-        posts.forEach((post) => {
+        return posts.map((post) => {
           const uid = post.uid;
           const user = users.filter((user) => (user.uid = uid));
-          (post = post),
-            { username: user[0]?.username, photoUrl: user[0]?.photoUrl };
+          console.log('user info', post.body,user[0]?.username);
+          
+            return {...post, username: user[0]?.username, photoUrl: user[0]?.photoUrl };
         });
-        return posts;
       })
-    );
-    //return this._af.collection('posts', ref => ref.where('productId','==',productid)).valueChanges();
+    );*/
   }
+
   save(p: Partial<IPost> & { uid: string }) {
     //generate an id
     const id = this._af.createId();
@@ -77,23 +94,6 @@ export class PostService {
     this._af.collection('posts').doc(id).set(data);
   }
 
-  getAllPosts(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(apiUrl);
-  }
-
-  /* getById(id:number): Observable<IPost>{
-    return this.http.get<IPost[]>(apiUrl).pipe(
-      map(posts => posts.find(a => a.id === id))
-    );
-  }*/
-
-  create(post: Partial<IPost>): Observable<IPost> {
-    return this.http.post<IPost>(apiUrl, post);
-  }
-
-  update(post: IPost) {
-    return this.http.put<IPost>(apiUrl + '/' + post.id, post);
-  }
 
   //get the first feed related to the product
   async getFirstPostsByProduct(productid: string) {

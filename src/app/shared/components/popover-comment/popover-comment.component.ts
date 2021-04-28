@@ -31,7 +31,7 @@ export class PopoverCommentComponent implements OnInit {
   //save comment in DB and close popover
   async sendComment(input){
     //prepare data
-    const {uid = null} = await this._auth.currentUser
+    const {uid = null} = await this._auth.currentUser;
     const data = {
       uid,
       productId: this.product.id, 

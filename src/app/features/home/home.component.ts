@@ -33,11 +33,11 @@ export class HomeComponent implements OnInit {
                 'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
                 'peaux-normales','cheveux','masque','corps','rasage','mains'];
   
-  private _isLiked$ = new Subject<boolean>()
+  private _isLiked$ = new BehaviorSubject<boolean>(null)
   isLiked$= this._isLiked$.asObservable();
   likesCount:Observable<number>;
   
-  private _isFav$ = new Subject<boolean>();
+  private _isFav$ = new BehaviorSubject<boolean>(null);
   isFav$ = this._isFav$.asObservable();
 
   constructor(
@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
     const { uid = null} = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
   }
+
   async presentPopover(ev: any,product) {
     const popover = await this.popoverController.create({
       component: PopoverCommentComponent,

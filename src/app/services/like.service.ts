@@ -17,7 +17,6 @@ export class LikeService {
     private _firestore: AngularFirestore,
     private _fireauth: AngularFireAuth
   ) {
-    console.log('[INFO] init likeService...');
     this._fireauth.user.pipe(
       map(user => user?.uid),
       switchMap(uid => {
@@ -117,45 +116,6 @@ export class LikeService {
 }
 
 
- /* constructor(private _angularFirestore: AngularFirestore) { }
-  public like(holeId: string, userId: string): Observable<DocumentReference> {
-    return 
-      this._angularFirestore.firestore
-        .collection('holes')
-        .doc(holeId)
-        .collection('likes')
-        .add({ uuid: userId })
-    
-  }
-
-  public unlike(holeId: string, userId: string): Observable<void> {
-    return
-      this._angularFirestore.firestore
-        .collection('holes')
-        .doc(holeId)
-        .collection('likes')
-        .where('uuid', '==', userId)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.docs.map(doc => {
-            return doc.ref.delete();
-          });
-        })
-  }*/
-/*
-  private likesCollection(holeId: string) {
-    return this.firebaseService.database
-      .collection('holes')
-      .doc(holeId)
-      .collection('likes');
-  }
-private getLikesCount(holeId: string): Observable<number> {
-    return from(this.likesCollection(holeId).get()).pipe(
-      map(querySnapshot => {
-        return querySnapshot.size;
-      }),
-      catchError(_ => of(0))
-    );*/
   
 
 

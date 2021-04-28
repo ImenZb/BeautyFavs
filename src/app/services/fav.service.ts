@@ -17,7 +17,6 @@ export class FavService {
     private _firestore: AngularFirestore,
     private _fireauth: AngularFireAuth
   ) {
-    console.log('[INFO] init FavService...');
     this._fireauth.user.pipe(
       map(user => user?.uid),
       switchMap(uid => {
