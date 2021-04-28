@@ -1,59 +1,67 @@
 <ion-header translucent>
-    <ng-container *ngIf="(item | async) as item">
-        <ion-toolbar [style.--background]="'url('+item.image_url || './assets/images/home.jpg'+')'">
-            <ion-buttons slot="start">
-                <ion-back-button></ion-back-button>
-            </ion-buttons>
-        </ion-toolbar> 
-    </ng-container>
+  <ng-container *ngIf="item">
+    <ion-toolbar [style.--background]="'url('+item.image_url+')'">
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()">
+            <ion-icon color="light" slot="icon-only" name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ng-container>
 </ion-header>
 
 <ion-content fullscreen>
-    <ion-grid class="ion-no-padding">
-        <ion-row class="ion-no-padding"> 
-                <ion-col size="12" class="background" class="ion-no-padding">              
-                    <ion-card class="ion-no-padding ion-no-margin">
-                        <ion-card-header class="ion-no-padding ion-no-margin">
-                            <ion-button fill="clear" shape="round" size="small">
-                                <ion-icon  name="heart-outline" slot="start"></ion-icon>
-                            </ion-button>
-                            <ion-button fill="clear" shape="round" size="small" class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </ion-button>
-                        </ion-card-header>
-                        <ion-card-header>
-                            <ion-card-subtitle class="ion-no-margin"><p class="post-text"><b>{{(item | async)?.likes}} likes</b></p></ion-card-subtitle>
-                            <ion-card-title class="ion-no-margin">
-                                {{(item | async)?.product_name}}-{{(item | async)?.brand}}
-                            </ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content class="ion-no-margin">
-                            <ng-container *ngIf="(item | async) as item">
-                                <ion-list-header lines="line" class="ion-no-padding">
-                                    <ion-chip [style.background]="'#fff'">
-                                        <ion-avatar class="post_avatar">
-                                        <img src="../../../assets/icons/profilFemal.svg">
-                                        </ion-avatar>
-                                        <ion-label class="post_label">{{item.username}}</ion-label>
-                                    </ion-chip>
-                                </ion-list-header>
-                                <p class="post-text"><b>{{item.product_name}}, {{item.brand}}.</b> {{item.feed[0]?.body}}</p>
-                               
-                                <ion-text color="primary"><p class="comment-text" (click)="openModal(item)">Voir tous les feeds</p></ion-text>
-                                <ion-item (click)="presentPopover($event,item)" lines="none">
-                                    <ion-avatar class="comment_avatar" slot="start">
-                                        <img [src]="'../../../assets/images/users/'+user.photoUrl" />
-                                    </ion-avatar>
-                                    <ion-label>
-                                        <ion-text color="medium">
-                                            <p class="comment-text">Ajouter un feed</p>
-                                        </ion-text>
-                                    </ion-label>
-                                </ion-item>
-                            </ng-container>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col size="12" class="background" class="ion-no-padding">
+        <ion-card class="ion-no-padding ion-no-margin">
+          <ion-card-header class="ion-no-padding ion-no-margin">
+            <ion-button fill="clear" shape="round" size="small">
+              <ion-icon name="heart-outline" slot="start"></ion-icon>
+              <ion-note>{{item?.likes}}</ion-note>
+            </ion-button>
+            <ion-button fill="clear" shape="round" size="small" class="bookmark">
+              <ion-icon name="bookmark-outline"></ion-icon>
+            </ion-button>
+          </ion-card-header>
+          <ion-card-header class="ion-text-center">
+            <ion-card-title class="ion-no-margin ion-padding-top">
+              {{item?.product_name}}
+            </ion-card-title>
+            <ion-card-title class="ion-no-margin">
+              {{item?.brand}}
+            </ion-card-title>
+            <ion-card-title class="ion-no-margin ion-padding-top">
+              <ion-text>
+                <h6>Add your review on this product</h6>
+              </ion-text>
+              <ion-button (click)="presentPopover($event,item)" fill="clear">
+                Add feed
+                <ion-icon slot="start" name="add"></ion-icon>
+              </ion-button>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="ion-no-margin ion-no-padding">
+            <ng-container *ngIf="(posts$ | async) as posts">
+              <ion-list>
+                <ion-list-header>
+                  <ion-label>Reviews</ion-label>
+                </ion-list-header>
+                <ion-item *ngFor="let post of posts" lines="none">
+                  <ion-avatar class="comment_avatar" slot="start">
+                    <img [src]="post.photoUrl || 'assets/images/users/profile_32.png'" />
+                  </ion-avatar>
+                  <ion-label>
+                    <ion-text color="medium">
+                      <p class="comment-text"><b>{{post.username}}</b>, {{post.body}}</p>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

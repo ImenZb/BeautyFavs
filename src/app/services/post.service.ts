@@ -43,7 +43,6 @@ export class PostService {
 
   async getPostsByProduct(productid: string) {
     const users = await this._userService.getAll().pipe(first()).toPromise();
-    console.log('---->users:',users);
     return this._af
         .collection<IPost>('posts', (ref) =>
           ref.where('productId', '==', productid)
