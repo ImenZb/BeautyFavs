@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 import { IProduit } from '../interfaces/produit';
+import { ProductListService } from './product-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class FavService {
 
   constructor(
     private _firestore: AngularFirestore,
-    private _fireauth: AngularFireAuth
+    private _fireauth: AngularFireAuth,
+    private _productListService: ProductListService
   ) {
     this._fireauth.user.pipe(
       map(user => user?.uid),
@@ -105,4 +107,16 @@ export class FavService {
     const key = fav.key;
     await this._firestore.collection('fav-products').doc(key).delete();
   }
-}
+
+  async getFavProductsList(){
+    const favs = this._fav$.value;
+    const products =[];
+    console.log('favs',favs);
+    favs.forEach(async (fav) => {
+      const product = await this._productListService.getByID(fav.id).pipe(first()).toPromise();
+      products.push(...product);
+    });
+    return products;
+  }
+  }
+

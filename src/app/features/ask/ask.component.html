@@ -1,31 +1,78 @@
 <ion-header>
-    <ion-toolbar class="ion-no-padding">
-        <ion-title class="ion-no-padding">
-            <h1 class="ion-text-capitalize">BeautyFavs</h1>
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar class="ion-no-padding">
+    <ion-title class="ion-no-padding">
+      <h1 class="ion-text-capitalize">Truth on Cosmetic</h1>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-grid class="ion-no-padding">
-        <ion-row class="ion-no-padding">
-            <ion-col size="12" class="ion-no-padding">
-            <ion-text><h2>Pros</h2></ion-text>
-               <ion-list class="ion-no-padding">
-                   <ion-item *ngFor="let proUser of proUsers" lines="none" class="ion-text-center ion-no-padding">
-                       <ion-avatar slot="start">
-                           <img [src]="'./assets/images/users/' + proUser.imageUrl" />
-                       </ion-avatar>
-                       <ion-label><p>{{proUser.username}}</p></ion-label>
-                   </ion-item>
-               </ion-list>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="12">
-                <ion-button color="primary" routerLink="question" expand="block" fill="outline">
-                    Ask for recommendation
-                </ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col size="12" class="ion-no-padding">
+        <ion-list-header class="ion-no-margin">
+            <ion-label class="label">Professionels</ion-label>
+            <ion-button color="light">See All</ion-button>
+          </ion-list-header>
+        <ion-list class="ion-no-padding">
+          <ion-item *ngFor="let proUser of proUsers" lines="none" class="ion-text-center ion-no-padding">
+            <ion-avatar slot="start">
+              <img [src]="'./assets/images/users/' + proUser.imageUrl" />
+            </ion-avatar>
+            <ion-label>
+              <p>{{proUser.username}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-text-center ion-padding-bottom">
+      <ion-col size="12">
+        <ion-button color="primary" routerLink="question" fill="outline">
+          Ask for recommendation
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-list-header class="ion-no-margin">
+      <ion-label class="label">Tag name</ion-label>
+      <ion-button color="light">See All</ion-button>
+    </ion-list-header>
+    <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col size="6">
+            <ion-card class="ion-no-padding">
+              <ion-card-content class="ion-no-padding">
+                <img class="img-wrapper" src="assets/images/question1.jpg">
+                <ion-item lines="none" class="ion-no-padding itemQuestion">
+                  <div class="ion-text-start padding-bottom">
+                    <h4><b>Looking for the best sunscreen SPF 50?</b></h4>
+                    <ion-text color="primary">
+                      <p><b>username</b></p>
+                    </ion-text>
+                    <ion-text>
+                      <p><span class="daySpan">day</span><span class="nbComment">nb comments</span></p>
+                    </ion-text>
+                  </div>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+      <ion-col size="6">
+        <ion-card class="ion-no-padding">
+          <ion-card-content class="ion-no-padding">
+            <img class="img-wrapper" src="assets/images/question2.jpg">
+            <ion-item lines="none" class="ion-no-padding itemQuestion">
+              <div class="ion-text-start padding-bottom">
+                <h4><b>Best Acne tinted moisturizers?</b></h4>
+                <ion-text color="primary">
+                  <p class="padding-bottom"><b>username</b></p>
+                </ion-text>
+                <ion-text>
+                  <p><span>day</span><span>nb comments</span></p>
+                </ion-text>
+              </div>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

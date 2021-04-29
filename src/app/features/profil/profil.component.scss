@@ -54,3 +54,149 @@ ion-label{
 
 
 
+.my-custom-menu {
+    --width: 75%;
+}
+
+ion-title {
+    font-size: small;
+    color: #000000;
+}
+
+.settingBtn {
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+}
+
+.add_story {
+    position: relative;
+    margin-left: 7px;
+    margin-right: 12px;
+    border-radius: 50%;
+    padding: 2px;
+}
+.profile-avatar ion-icon {
+    position: relative;
+    bottom: -5px;
+    right: 21px;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.profile-avatar img {
+    width: 80px;
+    height: 80px !important;
+    max-width: none;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+    margin-bottom: -3px;
+    margin-left: 6px;
+}
+
+.data-box p {
+    margin: 2px;
+    font-size: 14px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.data-box {
+    text-align: center !important;
+}
+
+ion-item:first-child {
+    position: fixed;
+    width: 100% !important;
+    z-index: 999;
+}
+
+ion-grid {
+    margin-top: 12%;
+}
+
+@media (min-width: 600px) {
+    ion-row.sec-row {
+        margin-top: -2%;
+    }
+}
+@media (max-width: 599px) {
+    ion-row.sec-row {
+        margin-top: -4%;
+    }
+}
+
+
+// ion-row.sec-row {
+//     margin-top: -4%;
+// }
+
+p.status {
+    font-size: 12px;
+}
+
+strong.name {
+    font-size: small !important;
+}
+
+.btn-edit {
+    box-shadow: none !important;
+    font-weight: 600;
+}
+.highlights {
+    display: flex;
+    overflow: scroll;
+}
+.highlights .img-box{
+    margin: 7px;
+    margin-right: 6px;
+    // margin-top: 4px;
+   // background-image: url('../../assets/instagram-bg-color.jpg');
+    background-size: contain;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.highlights .add_highlight {
+    margin-left: 7px;
+    margin-right: 12px;
+    // padding: 2px;
+}
+
+.add_highlight > ion-icon {
+    font-size: 61px;
+    border: 1px !important;
+    color: silver;
+}
+
+.highlights img {
+    width: 50px;
+    height: 50px !important;
+    max-width: none;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+    margin-bottom: -3px;
+}
+
+.highlight-name {
+    font-size: 11px;
+    text-align: center;
+    margin: 4px 0px 0px 0px;
+    font-weight: 500;
+    color: #383a3e;
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.img_box {
+    border: 1px solid white;
+    width: 33.3%;
+    padding-bottom: 31%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

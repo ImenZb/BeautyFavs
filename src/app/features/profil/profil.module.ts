@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProfilRoutingModule } from './profil-routing.module';
 import { ProfilComponent } from './profil.component';
 import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     CommonModule,
     ProfilRoutingModule,
-    IonicModule
+    IonicModule,
+    FormsModule
   ]
 })
 export class ProfilModule { }
