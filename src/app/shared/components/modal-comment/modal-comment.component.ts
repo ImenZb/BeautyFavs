@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { IPost } from 'src/app/interfaces/post';
 import { IProduit } from 'src/app/interfaces/produit';
 import { IUser } from 'src/app/interfaces/user';
@@ -25,8 +25,10 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {}
 
-  async ngAfterViewInit():Promise<void>{
-    this.posts$ = await this._postService.getPostsByProduct(this.produit.id);
+  ngAfterViewInit():void{
+    this.posts$ = this._postService.getPostsByProduct(this.produit.id).pipe(tap(posts => console.log('posts',posts)
+    ));
+
     setTimeout(() => {
       this.ionContent.nativeElement.scrollToBottom(250);
     }, 100);

@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
     this.productList$ = this._productListService.getProducts();
     const { uid = null} = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
+    
   }
 
   async presentPopover(ev: any,product) {

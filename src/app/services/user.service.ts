@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { IUser } from '../interfaces/user';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
@@ -72,6 +72,7 @@ export class UserService {
   }
   
   getAll(){
-    return this._af.collection<IUser>('users').valueChanges();
+    return this._af.collection<IUser>('users').valueChanges().pipe(tap(users => console.log('---->',users)
+    ));
   }
 }

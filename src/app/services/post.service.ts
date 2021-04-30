@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { IPost } from '../interfaces/post';
-import { first, map } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 
@@ -41,15 +41,18 @@ export class PostService {
       });
   }
 
-  async getPostsByProduct(productid: string) {
-    const users = await this._userService.getAll().pipe(first()).toPromise();
+  getPostsByProduct(productid: string) {
+    
     return this._af
         .collection<IPost>('posts', (ref) =>
           ref.where('productId', '==', productid)
         )
         .valueChanges()
         .pipe(
-        map(posts => {
+        switchMap(async(posts) => {
+          const users = await this._userService.getAll().pipe(first()).toPromise();
+          console.log('users',users);
+          
              //add users info related to post
           return posts.map((post) => {
             const uid = post.uid;
