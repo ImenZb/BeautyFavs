@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "deploy:ci": "ng deploy --base-href=/BeautyFavs/ --no-silent",
+    "deploy:ci": "ng deploy --base-href=/BeautyFavs/ --repo=https://github.com/ImenZb/BeautyFavs.git --name=ImenZb --email=imen.zbidi.b@gmail.com --no-silent",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
