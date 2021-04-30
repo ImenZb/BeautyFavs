@@ -26,7 +26,7 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit():void{
-    this.posts$ = this._postService.getPostsByProduct(this.produit.id).pipe(tap(posts => console.log('posts',posts)
+    this.posts$ = this._postService.getPostsByProduct(this.produit.id).pipe(tap(posts => console.log('posts -->',posts)
     ));
 
     setTimeout(() => {
