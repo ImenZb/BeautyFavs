@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { COMPONENTS } from './components';
+import { COMPONENTS, PIPES } from './components';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverCommentComponent } from './components/popover-comment/popover-comment.component';
@@ -10,7 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
-  declarations: [...COMPONENTS, PopoverCommentComponent, ModalCommentComponent, HeaderComponent],
+  declarations: [...COMPONENTS, ...PIPES],
   imports: [
     CommonModule,
     IonicModule,
