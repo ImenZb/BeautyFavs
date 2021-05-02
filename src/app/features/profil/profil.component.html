@@ -74,17 +74,17 @@
           <div [ngSwitch]="openedSegment" class="ion-padding-top">
             <div *ngSwitchCase="'grid'">
               <div class="grid">
-                <div class="img_box" *ngFor="let product of favProducsList|async"
-                  [style]="'background-image: url('+product.image_url+');'"
-                  [routerLink]="'../detail/'+product.id">
+                <div class="img_box" *ngFor="let product of favProducsList$|async"
+                  [style]="'background-image: url('+product?.image_url+');'"
+                  [routerLink]="'../detail/'+product?.id">
                 </div>
               </div>
             </div>
             <div *ngSwitchCase="'heart'">
               <div class="grid">
-                <div class="img_box" *ngFor="let product of likedProducsList|async"
-                  [style]="'background-image: url('+product.image_url+');'"
-                  [routerLink]="'../detail/'+product.id">
+                <div class="img_box" *ngFor="let product of likedProducsList$|async"
+                  [style]="'background-image: url('+product?.image_url+');'"
+                  [routerLink]="'../detail/'+product?.id">
                 </div>
               </div>
             </div>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ActionSheetController, MenuController } from '@ionic/angular';
 import { runInThisContext } from 'node:vm';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 import { IUser } from 'src/app/interfaces/user';
 import { FavService } from 'src/app/services/fav.service';
 import { LikeService } from 'src/app/services/like.service';
@@ -19,8 +19,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfilComponent implements OnInit {
   openedSegment = 'grid';
   user$: Observable<Partial<IUser>>;
-  favProducsList;
-  likedProducsList;
+  favProducsList$;
+  likedProducsList$;
   avatarURL: string;
   photoUrl;
   isActivatedCam = false;
@@ -39,8 +39,10 @@ export class ProfilComponent implements OnInit {
     const {uid = null} = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
     this.photoUrl = await this.user$.pipe(first(),map(user => user.photoUrl?user.photoUrl:'assets/images/users/profile_32.png')).toPromise();
-    this.favProducsList = this._favs.getFavProductsList();
-    this.likedProducsList = this._likes.getLikedProductsList();
+   // this.favProducsList$ = this._favs.getFavProductsList();
+    //this.likedProducsList$ = this._likes.getLikedProductsList();
+    this.favProducsList$ = this._favs.favs$.pipe(tap(data => console.log(data)));
+    this.likedProducsList$ = this._likes.likes$;
     this.likes = this._likes.getCountByUID(uid);
     this.favs = this._favs.getCountByUID(uid);
   }
