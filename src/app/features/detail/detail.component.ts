@@ -39,7 +39,7 @@ export class DetailComponent implements OnInit {
     this.item = (await this._productListService.getByID(this.id).pipe(first()).toPromise())[0]; 
     const { uid = null} = await this._auth.currentUser;
     this.user = await this._userService.getByUid(uid).pipe(first()).toPromise();
-    this.posts$ = await this._postService.getPostsByProduct(this.id);
+    this.posts$ = this._postService.getPostsByProduct(this.id);
   }
 
   async presentPopover(ev: any, produit) {

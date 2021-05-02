@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
@@ -7,7 +8,8 @@ import { IProduit } from 'src/app/interfaces/produit';
 import { IUser } from 'src/app/interfaces/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
-import { PopoverCommentComponent } from '../popover-comment/popover-comment.component';
+
+
 
 @Component({
   selector: 'app-modal-comment',
@@ -20,20 +22,20 @@ export class ModalCommentComponent implements OnInit,AfterViewInit {
   @ViewChild('content',{static:true,read:ElementRef}) ionContent:ElementRef<HTMLIonContentElement>;
   posts$: Observable<any>;
   constructor(private _postService: PostService,
-              private serviceUser: UserService,
-              public modalController: ModalController) { }
+              public modalController: ModalController,
+              public af:AngularFirestore) { }
 
-  ngOnInit(): void {}
+  async ngOnInit(): Promise<void> {
+    const test = await this.af.collection('users').valueChanges().pipe().toPromise();
+  }
 
   ngAfterViewInit():void{
-    this.posts$ = this._postService.getPostsByProduct(this.produit.id).pipe(tap(posts => console.log('posts -->',posts)
-    ));
+    this.posts$ = this._postService.getPostsByProduct(this.produit.id);
 
     setTimeout(() => {
       this.ionContent.nativeElement.scrollToBottom(250);
     }, 100);
   }
-
 
   closeModal() {
     this.modalController.dismiss();

@@ -35,7 +35,7 @@
     <ion-row class="ion-no-padding">
       <ion-col size="12" class="ion-no-padding">
         <ion-list class="ion-no-padding">
-          <ion-card *ngFor="let product of (productList$ | async)?.slice(min,max)" class="ion-margin-bottom">
+          <ion-card *ngFor="let product of (productList$ | async)?.slice(min,max); let i = index" class="ion-margin-bottom">
             <ion-item class="brandItem">
               <ion-label class="ion-no-margin">
                 <h2 class="ion-no-margin ion-text-capitalize name">{{product.product_name}}</h2>
@@ -47,10 +47,10 @@
             <img class="post_img" [src]="product.image_url" />
             <ion-card-header class="ion-no-padding ion-no-margin">
 
-              <ion-button (click)="toggleLike(product)" fill="clear" shape="round" size="small"
+              <ion-button (click)="toggleLikes(product,i)" fill="clear" shape="round" size="small"
                 class="ion-no-padding ion-no-margin">
                 <ion-icon *ngIf="(isLiked$|async) !== null; else initLike"
-                  [name]="(isLiked$|async) ? 'heart' : 'heart-outline'" slot="icon-only"></ion-icon>
+                  [name]="(productsisLiked$|async)[i] ? 'heart' : 'heart-outline'" slot="icon-only"></ion-icon>
                 <ng-template #initLike>
                   <ion-icon [name]="(product.id | likesInit | async)? 'heart' : 'heart-outline'" slot="icon-only">
                   </ion-icon>
@@ -58,9 +58,9 @@
                 <ion-note>{{product.id | likesCount | async}}</ion-note>
               </ion-button>
               
-              <ion-button (click)="toggleFav(product)" class="bookmark" fill="clear" shape="round" size="small">
+              <ion-button (click)="toggleFavs(product,i)" class="bookmark" fill="clear" shape="round" size="small">
                 <ion-icon *ngIf="(isFav$|async) !== null; else initFav"
-                  [name]="(isFav$|async) ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+                  [name]="(productsisFav$|async)[i] ? 'bookmark' : 'bookmark-outline'"></ion-icon>
                 <ng-template #initFav>
                   <ion-icon [name]="(product.id | favInit | async)? 'bookmark' : 'bookmark-outline'" slot="icon-only">
                   </ion-icon>
@@ -74,6 +74,7 @@
                   </ion-label>
                   <ion-note>
                     <p class="post-text">{{post.body}}</p>
+                    <p class="post-text">{{post.date}}</p>
                   </ion-note>
                   <ion-button fill="clear" (click)="openModal(product)" size="small">
                     <span class="comment-text1">See all feeds</span>

@@ -39,6 +39,13 @@ export class HomeComponent implements OnInit {
   
   private _isFav$ = new BehaviorSubject<boolean>(null);
   isFav$ = this._isFav$.asObservable();
+  private _productsisFav$ = new BehaviorSubject([]);
+  productsisFav$ = this._productsisFav$.asObservable();
+  productsisFav = [];
+
+  private _productsisLiked$ = new BehaviorSubject([]);
+  productsisLiked$ = this._productsisFav$.asObservable();
+  productsisLiked = [];
 
   constructor(
               private _auth: AngularFireAuth,
@@ -57,7 +64,15 @@ export class HomeComponent implements OnInit {
     this.productList$ = this._productListService.getProducts();
     const { uid = null} = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
-    
+    //array of boolean
+    this.productsisFav = (await this.productList$.toPromise()).map(product => this.isFav(product));
+    //Observable array isFav
+    this._productsisFav$.next(this.productsisFav);
+
+    //array of boolean
+    this.productsisLiked = (await this.productList$.toPromise()).map(product => this.isLiked(product));
+    //Observable array isFav
+    this._productsisLiked$.next(this.productsisLiked);
   }
 
   async presentPopover(ev: any,product) {
@@ -97,7 +112,7 @@ export class HomeComponent implements OnInit {
     this.max = this.max + 10;
     $event.target.complete();
   }
-  // Like actions
+  // Like actions for one item
   async toggleLike(item: IProduit) {
     const isLiked = await this._likeService.isLiked(item.id).pipe(first()).toPromise();
     if (!isLiked) {
@@ -108,6 +123,22 @@ export class HomeComponent implements OnInit {
     this._isLiked$.next(!isLiked);
   }
 
+  //Like actions for items list
+  async isLiked(item: IProduit){
+    return await this._likeService.isLiked(item.id).pipe(first()).toPromise();
+  }
+  async toggleLikes(item: IProduit, index:number) {
+    const isLiked = await this._likeService.isLiked(item.id).pipe(first()).toPromise();
+    if (!isLiked) {
+      await this.addLike(item.id);
+    } else {
+      await this.removeLike(item.id);
+    }
+    //this._isLiked$.next(!isLiked);
+    this.productsisLiked[index] = !isLiked;
+    this._productsisLiked$.next(this.productsisLiked);
+  }
+
   async addLike(id: string) {
     await this._likeService.add({id});
   }
@@ -116,7 +147,8 @@ export class HomeComponent implements OnInit {
     await this._likeService.remove(id);
   }
 
-  // Fav actions 
+ 
+  // Fav action for one item 
   async toggleFav(item: IProduit) {
     const isFav = await this._favService.isFav$(item.id).pipe(first()).toPromise();
     if (!isFav) {
@@ -125,6 +157,22 @@ export class HomeComponent implements OnInit {
       await this.removeFav(item.id);
     }
     this._isFav$.next(!isFav);
+  }
+
+  // Fav actions for item list
+  async isFav(item: IProduit){
+    return await this._favService.isFav$(item.id).pipe(first()).toPromise();
+  }
+  async toggleFavs(item: IProduit, index:number) {
+    const isFav = await this._favService.isFav$(item.id).pipe(first()).toPromise();
+    if (!isFav) {
+      await this.addFav(item.id);
+    } else {
+      await this.removeFav(item.id);
+    }
+    //this._isFav$.next(!isFav);
+    this.productsisFav[index] = !isFav;
+    this._productsisFav$.next(this.productsisFav);
   }
 
   async addFav(id: string) {

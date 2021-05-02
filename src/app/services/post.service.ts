@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { IPost } from '../interfaces/post';
-import { first, map, switchMap } from 'rxjs/operators';
+import { first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './user.service';
+import { IUser } from '../interfaces/user';
 
-const apiUrl = ' http://localhost:3000/posts';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,6 @@ export class PostService {
   public postsList$ = this._postsList$.asObservable();
 
   constructor(
-    private http: HttpClient,
     private _userService: UserService,
     private _af: AngularFirestore
   ) {
@@ -42,7 +41,6 @@ export class PostService {
   }
 
   getPostsByProduct(productid: string) {
-    
     return this._af
         .collection<IPost>('posts', (ref) =>
           ref.where('productId', '==', productid)
@@ -51,35 +49,14 @@ export class PostService {
         .pipe(
         switchMap(async(posts) => {
           const users = await this._userService.getAll().pipe(first()).toPromise();
-          console.log('users',users);
-          
-             //add users info related to post
+          //const users = await this._af.collection<IUser>('users').valueChanges().pipe(first()).toPromise();
+         //add users info related to post
           return posts.map((post) => {
             const uid = post.uid;
             const user = users.filter((user) => (user.uid === uid));
               return {...post, username: user[0]?.username, photoUrl: user[0]?.photoUrl };
           })
           }));
-        
-   /* return combineLatest([
-      this._af
-        .collection<IPost>('posts', (ref) =>
-          ref.where('productId', '==', productid)
-        )
-        .valueChanges(),
-      this._userService.getAll(),
-    ]).pipe(
-      map(([posts, users]) => {
-        //add users info related to post
-        return posts.map((post) => {
-          const uid = post.uid;
-          const user = users.filter((user) => (user.uid = uid));
-          console.log('user info', post.body,user[0]?.username);
-          
-            return {...post, username: user[0]?.username, photoUrl: user[0]?.photoUrl };
-        });
-      })
-    );*/
   }
 
   save(p: Partial<IPost> & { uid: string }) {
@@ -91,7 +68,7 @@ export class PostService {
       productId: p.productId,
       uid: p.uid,
       body: p.body,
-      date: Date.now(),
+      date: new Date(),
     };
     this._af.collection('posts').doc(id).set(data);
   }

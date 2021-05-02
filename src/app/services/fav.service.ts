@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first, map, switchMap } from 'rxjs/operators';
+import { first, map, switchMap, tap } from 'rxjs/operators';
 import { IProduit } from '../interfaces/produit';
 import { ProductListService } from './product-list.service';
 
@@ -109,14 +109,21 @@ export class FavService {
   }
 
   async getFavProductsList(){
-    const favs = this._fav$.value;
-    const products =[];
-    console.log('favs',favs);
+    const products = [];
+    const { uid=null } = await this._fireauth.currentUser;
+    const favs = await this._firestore.collection<{uid:string,id:string}>('fav-products', ref => ref.where('uid', '==', uid)).valueChanges().pipe(first()).toPromise();
     favs.forEach(async (fav) => {
-      const product = await this._productListService.getByID(fav.id).pipe(first()).toPromise();
+      const product = await this._productListService.getByID(fav.id).pipe(first()).toPromise();  
       products.push(...product);
     });
     return products;
+  }
+
+  getCountByUID(uid: string){
+    return this._firestore.collection('fav-products', ref => ref.where('uid', '==', uid)).valueChanges().pipe(
+      map(querySnapshot => {
+        return querySnapshot.length;
+      }))
   }
   }
 

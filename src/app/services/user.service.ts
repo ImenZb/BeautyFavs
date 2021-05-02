@@ -72,7 +72,6 @@ export class UserService {
   }
   
   getAll(){
-    return this._af.collection<IUser>('users').valueChanges().pipe(tap(users => console.log('---->',users)
-    ));
+    return this._af.collection<IUser>('users').valueChanges();
   }
 }

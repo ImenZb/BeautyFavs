@@ -5,6 +5,7 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 import { IProduit } from '../interfaces/produit';
+import { ProductListService } from './product-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class LikeService {
 
   constructor(
     private _firestore: AngularFirestore,
-    private _fireauth: AngularFireAuth
+    private _fireauth: AngularFireAuth,
+    private _productListService: ProductListService
   ) {
     this._fireauth.user.pipe(
       map(user => user?.uid),
@@ -109,6 +111,24 @@ export class LikeService {
 
   getCount(id:string){
     return this._firestore.collection('likes-products', ref => ref.where('id', '==', id)).valueChanges().pipe(
+      map(querySnapshot => {
+        return querySnapshot.length;
+      }))
+  }
+
+  async getLikedProductsList(){
+    const products = [];
+    const { uid=null } = await this._fireauth.currentUser;
+    const likes = await this._firestore.collection<{uid:string,id:string}>('likes-products', ref => ref.where('uid', '==', uid)).valueChanges().pipe(first()).toPromise();
+    likes.forEach(async (like) => {
+      const product = await this._productListService.getByID(like.id).pipe(first()).toPromise();  
+      products.push(...product);
+    });
+    return products;
+  }
+
+  getCountByUID(uid: string){
+    return this._firestore.collection('likes-products', ref => ref.where('uid', '==', uid)).valueChanges().pipe(
       map(querySnapshot => {
         return querySnapshot.length;
       }))

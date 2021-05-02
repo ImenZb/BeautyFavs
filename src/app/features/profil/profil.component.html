@@ -1,116 +1,125 @@
 <ion-content [fullscreen]="true">
-    <ion-item lines="none">
-     <ion-label>
-       <h3><strong>{{(user$ | async)?.username}} </strong> <ion-icon name="chevron-down-outline"></ion-icon></h3>
-     </ion-label>
-     <div id="main">
-       <ion-buttons slot="start">
-         <ion-menu-button></ion-menu-button>
-       </ion-buttons>
-     </div>
-   </ion-item>
-   <ion-content [fullscreen]="true">
-   <ion-grid>
-     <ion-row>
-       <ion-col size="4">
-         <div class="profile-avatar">
-            <img *ngIf="(user$ | async)?.photoUrl as photoURL; else default" [src]="photoURL" />
-            <ng-template #default>
-              <img src="assets/images/users/profile_32.png" />
+  <ion-item lines="none">
+    <ion-label>
+      <h3><strong>{{(user$ | async)?.username}} </strong>
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </h3>
+    </ion-label>
+    <div id="main">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </div>
+  </ion-item>
+  <ion-content [fullscreen]="true">
+    <ion-grid>
+      <ion-row class="ion-padding-top">
+        <ion-col size="4">
+          <div class="profile-avatar">
+            <img [src]="photoUrl | safe" />
+            <ion-icon *ngIf="isActivatedCam;else takephoto" (click)="savePicture()" color="primary" name="add-circle"></ion-icon>
+            <ng-template #takephoto>
+              <ion-icon (click)="takePicture()" color="primary" name="camera"></ion-icon>
             </ng-template>
-           <ion-icon color="primary" name="add-circle"></ion-icon>
-         </div>
-       </ion-col>
-       <ion-col size="8" class="ion-align-self-center">
-           <ion-row>
-             <ion-col size="4" class="data-box">
-               <strong>
-                 nb 
-               </strong>
-               <p>Reviews</p>
-             </ion-col>
-             <ion-col size="4" class="data-box">
-               <strong>
-                 nb
-               </strong>
-               <p>favs</p>
-             </ion-col>
-             <ion-col size="4" class="data-box">
-               <strong>
-                 nb
-               </strong>
-               <p>Following Pros</p>
-             </ion-col>
-           </ion-row>
-       </ion-col>
-     </ion-row>
-     <ion-row class="sec-row">
-       <ion-col size="6">
-         <p class="status">
-           <strong class="name">{{(user$ | async)?.firstName}} {{(user$ | async)?.lasttName}}</strong> <br>
-         </p>
-       </ion-col>
-     </ion-row>
-     <ion-row>
-       <ion-col size="12">
-         <ion-button class="btn-edit" expand="full" color="light">Edit Profile</ion-button>
-       </ion-col>
-     </ion-row>
-     <ion-row>
-       <ion-item-divider>
-       </ion-item-divider>
-       <ion-col size="12">
-         <ion-segment color="medium" [(ngModel)]="openedSegment" (ionChange)="segmentChanged($event)">
-           <ion-segment-button value="grid">
-             <ion-icon name="grid-outline"></ion-icon>
-           </ion-segment-button>
-           <ion-segment-button value="heart">
-             <ion-icon name="heart-outline"></ion-icon>
-           </ion-segment-button>
-           <ion-segment-button value="tags">
-             <ion-icon name="person-circle-outline"></ion-icon>
-           </ion-segment-button>
-         </ion-segment>
-         <div [ngSwitch]="openedSegment">
-           <div *ngSwitchCase="'grid'">
-             <div class="grid">
-                <div class="img_box" *ngFor="let product of favProducsList|async" [style]="'background-image: url('+product.image_url+');'">
+          </div>
+        </ion-col>
+        <ion-col size="8" class="ion-align-self-center">
+          <ion-row>
+            <ion-col size="4" class="data-box">
+              <strong>
+                {{likes | async}}
+              </strong>
+              <p>Likes</p>
+            </ion-col>
+            <ion-col size="4" class="data-box">
+              <strong>
+                {{favs | async}}
+              </strong>
+              <p>favs</p>
+            </ion-col>
+            <ion-col size="4" class="data-box">
+              <strong>
+                nb
+              </strong>
+              <p>Following Pros</p>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="sec-row">
+        <ion-col size="6">
+          <p class="status">
+            <strong class="name">{{(user$ | async)?.firstName}} {{(user$ | async)?.lasttName}}</strong> <br>
+          </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button class="btn-edit" expand="full" color="light">Edit Profile</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-segment color="medium" [(ngModel)]="openedSegment" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="grid">
+              <ion-icon name="grid-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="heart">
+              <ion-icon name="heart-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="tags">
+              <ion-icon name="person-circle-outline"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+          <div [ngSwitch]="openedSegment" class="ion-padding-top">
+            <div *ngSwitchCase="'grid'">
+              <div class="grid">
+                <div class="img_box" *ngFor="let product of favProducsList|async"
+                  [style]="'background-image: url('+product.image_url+');'"
+                  [routerLink]="'../detail/'+product.id">
                 </div>
-                </div>
-           </div>
-           <div *ngSwitchCase="'heart'">
-             <div class="grid">
-               likes
+              </div>
             </div>
-           </div>
-           <div *ngSwitchDefault>
-             pros
-           </div>
-         </div>
-       </ion-col>
-     </ion-row>
-   </ion-grid>
-   </ion-content>
-   <ion-menu side="end" menuId="first" contentId="main" class="my-custom-menu">
-     <ion-header>
-       <ion-toolbar>
-         <ion-title>Username</ion-title>
-       </ion-toolbar>
-     </ion-header>
-     <ion-content>
-       <ion-list>
-         <ion-item>
-           <ion-icon name="person-add-outline"></ion-icon>
-           &nbsp; Pro account
-         </ion-item>
-           <ion-item>
-           <ion-icon name="cog-outline"></ion-icon>
-           &nbsp; Settings</ion-item>
-         
-       </ion-list>
-     </ion-content>
-   </ion-menu>
-   </ion-content>
+            <div *ngSwitchCase="'heart'">
+              <div class="grid">
+                <div class="img_box" *ngFor="let product of likedProducsList|async"
+                  [style]="'background-image: url('+product.image_url+');'"
+                  [routerLink]="'../detail/'+product.id">
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchDefault>
+              pros
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <ion-menu side="end" menuId="first" contentId="main" class="my-custom-menu">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{(user$ | async)?.username}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon name="person-add-outline"></ion-icon>
+          &nbsp; Pro account
+        </ion-item>
+        <ion-item>
+          <ion-icon name="settings-outline"></ion-icon>
+          &nbsp; Settings
+        </ion-item>
+        <ion-item (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          &nbsp; Logout
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+</ion-content>
 <!--
 <ion-header>
     <ion-toolbar>

@@ -81,9 +81,6 @@ export class SearchComponent implements OnInit {
             }
           }
         });
-        console.log('array',resultLocal)
-        console.log('set array',[...new Set(resultLocal)]);
-        
         return [...new Set(resultLocal)];
       })
     )

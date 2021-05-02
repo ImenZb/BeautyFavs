@@ -5,10 +5,13 @@ import { ProfilRoutingModule } from './profil-routing.module';
 import { ProfilComponent } from './profil.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { SafePipe } from 'src/app/pipes/safe.pipe';
 
 
 @NgModule({
-  declarations: [ProfilComponent],
+  declarations: [
+    ProfilComponent,
+    SafePipe],
   imports: [
     CommonModule,
     ProfilRoutingModule,
