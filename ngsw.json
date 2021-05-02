@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1619973460686,
+  "timestamp": 1619974513502,
   "index": "/BeautyFavs/index.html",
   "assetGroups": [
     {
@@ -18,7 +18,7 @@
         "/BeautyFavs/15.f0a1d63958a3127513a9.js",
         "/BeautyFavs/16.09e651ac603c2def3beb.js",
         "/BeautyFavs/17.2d9b00fe939519776798.js",
-        "/BeautyFavs/18.fba4cbf07df1260fb93e.js",
+        "/BeautyFavs/18.c18f36e19c822b8e4dcf.js",
         "/BeautyFavs/19.11c42316ddb8316f6bae.js",
         "/BeautyFavs/2.e85b74b890a9fea8a9b1.js",
         "/BeautyFavs/20.9ea074019f41e5858f42.js",
@@ -90,7 +90,7 @@
         "/BeautyFavs/polyfills-css-shim.03957cf6885d947aac91.js",
         "/BeautyFavs/polyfills-dom.1b9580c9b52684c88420.js",
         "/BeautyFavs/polyfills.3227b3cecbd90ee455b5.js",
-        "/BeautyFavs/runtime.80ebf2c0d6cf609ec235.js",
+        "/BeautyFavs/runtime.742a9bfc27f8f645b1d8.js",
         "/BeautyFavs/stencil-polyfills-css-shim.8be2f73e645a1f606c19.js",
         "/BeautyFavs/stencil-polyfills-dom.a71a84c96ae050971404.js",
         "/BeautyFavs/styles.55637b20759ece8f5208.css"
@@ -153,7 +153,7 @@
     "/BeautyFavs/15.f0a1d63958a3127513a9.js": "a01ebbdf9914844c0dc41e6ac4ace5b3d8517ea6",
     "/BeautyFavs/16.09e651ac603c2def3beb.js": "33d8a2f85fdc6939fd1e9bbeaa2b920df7ff7af2",
     "/BeautyFavs/17.2d9b00fe939519776798.js": "c7ad6985701e7cad9fbc21d6a391ce88d1dc914b",
-    "/BeautyFavs/18.fba4cbf07df1260fb93e.js": "aaf8e8e85a9e86e4694766f97c4a0b7554cd1e93",
+    "/BeautyFavs/18.c18f36e19c822b8e4dcf.js": "24d2e530471902bf53006a90eadffcefd206662c",
     "/BeautyFavs/19.11c42316ddb8316f6bae.js": "7d9b66a85048ee31acdc587c8b3d2cb370cedfeb",
     "/BeautyFavs/2.e85b74b890a9fea8a9b1.js": "f00c4f6c29f30c2f76e8caa37dca50b128d2f785",
     "/BeautyFavs/20.9ea074019f41e5858f42.js": "dad2dc5567e205eaea43829041c4949ebb66a88f",
@@ -253,14 +253,14 @@
     "/BeautyFavs/assets/images/users/profile_48.png": "18c10d68af9b29bd8a56f4ff799888fa4083ef8b",
     "/BeautyFavs/common.f35d5e566f81f598a14c.js": "6a13305c0d799b8a5c3cad03ca014d3164a22795",
     "/BeautyFavs/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/BeautyFavs/index.html": "519a670838eb8467eb467cae963bb465ed77cbfa",
+    "/BeautyFavs/index.html": "d5e8301776d5e88fd093eaaf5c8159198c1c2ab3",
     "/BeautyFavs/main.0a735c6ea33840a5b165.js": "5de647f4e1b3297a77085452bf6f6c6d1dd761e0",
     "/BeautyFavs/manifest.webmanifest": "3d6331565927c23814e78c27302b7eff8e97f373",
     "/BeautyFavs/polyfills-core-js.eccf552c89e248631548.js": "f71279ef311f3c1cecc661b8aabe632959a282f8",
     "/BeautyFavs/polyfills-css-shim.03957cf6885d947aac91.js": "3f4dd6685f2d8a7a5f6fe2d3fa9e9320d460b112",
     "/BeautyFavs/polyfills-dom.1b9580c9b52684c88420.js": "3d12740300342a24e404779d9c0a06c58f44ec7c",
     "/BeautyFavs/polyfills.3227b3cecbd90ee455b5.js": "48cbf5a28ef77014760cdc43e7e584925bb77aec",
-    "/BeautyFavs/runtime.80ebf2c0d6cf609ec235.js": "6f594d28490744fad316e8aa9a5e3a6eecc4014c",
+    "/BeautyFavs/runtime.742a9bfc27f8f645b1d8.js": "b5e03a3e7b33bebdeaf118e3ebb7e0b787821b74",
     "/BeautyFavs/stencil-polyfills-css-shim.8be2f73e645a1f606c19.js": "3f5dee28b47d7e401f842204770e11e1c7243ec1",
     "/BeautyFavs/stencil-polyfills-dom.a71a84c96ae050971404.js": "754c9667a7c869d9424eea255fa8981e187c13e8",
     "/BeautyFavs/styles.55637b20759ece8f5208.css": "d2edaa7c3c86d10f0f4217b2f275a190e8ebdc31"
