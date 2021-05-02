@@ -40,7 +40,6 @@ export class PopoverCommentComponent implements OnInit {
     //save data
     this._postService.save(data);
     //close popover
-    //
     const existPopOver = await this.popoverController.getTop();
     if(existPopOver)this.popoverController.dismiss();
   }

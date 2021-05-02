@@ -23,8 +23,8 @@
                         <ion-label>
                             <h4>{{post.username}}</h4>
                             <p class="post-text">{{post.body}}</p>
-                            <p class="post-text">{{post.date | date}}</p>
-                            <!--<p>{{post.date | DayJSPipe: 'fromNow'}}</p>-->
+                            <p class="post-text">{{post?.date?.toDate() | date}}</p>
+                            <!--<p>{{post.date.toDate() | DayJSPipe: 'fromNow'}}</p>-->
                         </ion-label>
                     </ion-item>
                 </ion-list>

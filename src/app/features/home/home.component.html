@@ -68,13 +68,13 @@
               </ion-button>
             </ion-card-header>
             <ion-card-content class="ion-no-padding ion-no-margin">
-              <ion-list-header lines="line" class="ion-no-padding ion-no-margin">
-                <ion-chip class="ion-no-padding ion-no-margin" [style.background]="'#fff'" *ngIf="(product.id | first |async) as post; else comment">
+              <ion-list-header lines="line" class="ion-no-padding ion-no-margin ion-padding-bottom">
+                <ion-chip class="ion-no-padding ion-no-margin" [style.background]="'#fff'" *ngIf="(product.id | first | async) as post; else comment">
                   <ion-label class="post_label">{{post.username}},
                   </ion-label>
                   <ion-note>
                     <p class="post-text">{{post.body}}</p>
-                    <p class="post-text">{{post.date}}</p>
+                    <p class="post-text">{{(post?.date?.toDate()) | date}}</p>
                   </ion-note>
                   <ion-button fill="clear" (click)="openModal(product)" size="small">
                     <span class="comment-text1">See all feeds</span>

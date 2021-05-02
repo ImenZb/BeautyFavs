@@ -16,12 +16,12 @@
       <ion-col size="12" class="background" class="ion-no-padding">
         <ion-card class="ion-no-padding ion-no-margin">
           <ion-card-header class="ion-no-padding ion-no-margin">
-            <ion-button fill="clear" shape="round" size="small">
-              <ion-icon name="heart-outline" slot="start"></ion-icon>
-              <ion-note>{{item?.likes}}</ion-note>
+            <ion-button (click)="toggleLike(item)" fill="clear" shape="round" size="small">
+              <ion-icon [name]="(isLiked$|async) ? 'heart' : 'heart-outline'" slot="start"></ion-icon>
+              <ion-note>{{likesCount | async}}</ion-note>
             </ion-button>
-            <ion-button fill="clear" shape="round" size="small" class="bookmark">
-              <ion-icon name="bookmark-outline"></ion-icon>
+            <ion-button (click)="toggleFav(item)" fill="clear" shape="round" size="small" class="bookmark">
+              <ion-icon [name]="(isFav$|async) ? 'bookmark' : 'bookmark-outline'"></ion-icon>
             </ion-button>
           </ion-card-header>
           <ion-card-header class="ion-text-center">

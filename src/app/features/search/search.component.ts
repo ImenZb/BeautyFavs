@@ -96,6 +96,11 @@ export class SearchComponent implements OnInit {
     await ionModal.present();
   }
 
+  getProduct(){
+    return this._productListService.getProducts().pipe(map(products => {
+      return products.filter(product => this.isMatched(product.product_name,this.query) || this.isMatched(product.tag,this.query))
+    }))
+  }
   isMatched(searchTerm:string,name:string){
     let words = searchTerm.split(' ');
     let isMatched = false;
