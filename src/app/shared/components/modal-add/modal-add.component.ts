@@ -8,6 +8,7 @@ import { ProductListService } from 'src/app/services/product-list.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { PostService } from 'src/app/services/post.service';
 import { unescapeIdentifier } from '@angular/compiler';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-modal-add',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -27,7 +28,8 @@ export class ModalAddComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _productListService: ProductListService,
               private _postService: PostService,
-              private _auth: AngularFireAuth) { }
+              private _auth: AngularFireAuth,
+              private _af: AngularFirestore) { }
 
   async ngOnInit(): Promise<void> {
     this.form = this._formBuilder.group({
@@ -57,19 +59,19 @@ export class ModalAddComponent implements OnInit {
   }
 
   onSubmit(){
-    
-    const productId = Math.floor(Math.random()*1000).toString() + 'n';
+    const id = this._af.createId();
+    //const productId = Math.floor(Math.random()*1000).toString() + 'n';
     const feed = this.form.get('feed').value;
     const product_name = this.form.get('product_name').value;
     const tag = this.form.get('tag').value;
     const category = this.form.get('category').value;
     const brand = this.form.get('brand').value;
     const date: Date = new Date();
-    const product = {productId, product_name, brand, tag, category, created_datetime: date,
+    const product = {id, product_name, brand, tag, category, created_datetime: date,
                     imageUrl:this.productImg, likes:0};
     const uid:string = this.user?.uid;
     const post = {uid,
-                  productId,
+                  productId:id,
                   body:feed,
                   date}
     this._productListService.create(product);

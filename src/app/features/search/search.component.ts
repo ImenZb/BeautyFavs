@@ -35,7 +35,6 @@ export class SearchComponent implements OnInit {
   filterList($event){
    this.query = $event.srcElement.value;
    this.isKeyEntered = true;
-   
    this.resultsGoogle = this.getGoogle();
    this.resultsLocal = this.getLocal();
   }
@@ -64,11 +63,12 @@ export class SearchComponent implements OnInit {
   }
 
   getLocal(): Observable<IProduit[]>{
-    return forkJoin([
+   return forkJoin([
       this.serviceGoogle.getAll(this.query),
-      this._productListService.productList$.pipe(first())
+      this._productListService.productList$.pipe(first()),
+      this.getProduct().pipe(first())
     ]).pipe(
-      map(([produitsGoogle, produits]) =>{
+      map(([produitsGoogle, produits, productList]) =>{
         let resultLocal:any[]=[];
         [...produitsGoogle.items].forEach(produitGoogle => {
           for (let index = 0; index < produits.length; index++) {
@@ -81,7 +81,7 @@ export class SearchComponent implements OnInit {
             }
           }
         });
-        return [...new Set(resultLocal)];
+        return [...new Set([...resultLocal, ...productList])];
       })
     )
   }
@@ -98,7 +98,7 @@ export class SearchComponent implements OnInit {
 
   getProduct(){
     return this._productListService.getProducts().pipe(map(products => {
-      return products.filter(product => this.isMatched(product.product_name,this.query) || this.isMatched(product.tag,this.query))
+      return products.filter(product => this.isMatched(this.query,product.product_name))
     }))
   }
   isMatched(searchTerm:string,name:string){

@@ -7,11 +7,12 @@
     </ion-label>
     <div id="main">
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-button (click)="presentActionSheet()">
+          <ion-icon slot="start" name="menu"></ion-icon>
+      </ion-button>
       </ion-buttons>
     </div>
   </ion-item>
-  <ion-content [fullscreen]="true">
     <ion-grid>
       <ion-row class="ion-padding-top">
         <ion-col size="4">
@@ -96,77 +97,3 @@
       </ion-row>
     </ion-grid>
   </ion-content>
-  <ion-menu side="end" menuId="first" contentId="main" class="my-custom-menu">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{(user$ | async)?.username}}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-icon name="person-add-outline"></ion-icon>
-          &nbsp; Pro account
-        </ion-item>
-        <ion-item>
-          <ion-icon name="settings-outline"></ion-icon>
-          &nbsp; Settings
-        </ion-item>
-        <ion-item (click)="logout()">
-          <ion-icon name="log-out-outline"></ion-icon>
-          &nbsp; Logout
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-</ion-content>
-<!--
-<ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="end">
-            <ion-button (click)="presentActionSheet()">
-                <ion-icon slot="start" name="menu"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-    <div class="ion-text-center grid">
-        <img class="img_box" src="../../../assets/icons/profilFemal.svg">
-        <ion-title>Username</ion-title>
-    </div>
-    
-</ion-header>
-<ion-content>  
-    <ion-grid class="ion-no-padding ion-no-margin">
-        <ion-row class="ion-no-padding ion-no-margin">
-            <ion-col size="12" class="ion-no-padding ion-no-margin">
-                <ion-button fill="clear" shape="round" size="small">
-                    <ion-icon  name="add-outline" slot="start"></ion-icon>
-                    <ion-label>New collection</ion-label>
-                </ion-button>
-                <ion-button class="allProducts" fill="clear" shape="round" size="small">
-                    <ion-label>All products</ion-label>
-                </ion-button> 
-            </ion-col>
-        </ion-row>
-        <ion-row class="ion-no-padding ion-no-margin">
-            <ion-col size="12" class="ion-no-padding ion-no-margin">
-                <ion-item class="ion-no-margin" lines="none">
-                    <ion-icon slot="start" name="folder-outline"></ion-icon>
-                    <ion-label><h4>Favorites</h4></ion-label>
-                    <ion-button class="collection" fill="clear" shape="round">
-                        <ion-icon slot="end" name="more"></ion-icon>
-                    </ion-button>
-                </ion-item> 
-                <ion-item class="ion-no-margin" lines="none">
-                    <ion-icon slot="start" name="folder-outline"></ion-icon>
-                    <ion-label><h4>Wishlist</h4></ion-label>
-                    <ion-button class="collection" fill="clear" shape="round">
-                        <ion-icon slot="end" name="more"></ion-icon>
-                    </ion-button>
-                </ion-item>  
-            </ion-col>
-        </ion-row>
-        
-    </ion-grid>
-</ion-content>
--->

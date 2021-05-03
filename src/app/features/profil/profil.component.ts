@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { ActionSheetController, MenuController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  MenuController,
+  ModalController,
+} from '@ionic/angular';
 import { runInThisContext } from 'node:vm';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
@@ -10,11 +14,12 @@ import { FavService } from 'src/app/services/fav.service';
 import { LikeService } from 'src/app/services/like.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { UserService } from 'src/app/services/user.service';
+import { ProAccountModalComponent } from './pro-account-modal/pro-account-modal.component';
 
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',
-  styleUrls: ['./profil.component.scss']
+  styleUrls: ['./profil.component.scss'],
 })
 export class ProfilComponent implements OnInit {
   openedSegment = 'grid';
@@ -25,40 +30,48 @@ export class ProfilComponent implements OnInit {
   photoUrl;
   isActivatedCam = false;
   likes: Observable<number>;
-  favs:Observable<number>;
-  constructor(public actionSheetCtrl: ActionSheetController,
-              private _auth: AngularFireAuth,
-              private _router: Router,
-              private _menu: MenuController,
-              private _userService: UserService,
-              private _favs: FavService,
-              private _likes: LikeService,
-              private _photo:PhotoService) { }
+  favs: Observable<number>;
+  constructor(
+    public actionSheetCtrl: ActionSheetController,
+    private _auth: AngularFireAuth,
+    private _router: Router,
+    private _menu: MenuController,
+    private _userService: UserService,
+    private _favs: FavService,
+    private _likes: LikeService,
+    private _photo: PhotoService,
+    private _modalController: ModalController
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    const {uid = null} = await this._auth.currentUser;
+    const { uid = null } = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
-    this.photoUrl = await this.user$.pipe(first(),map(user => user.photoUrl?user.photoUrl:'assets/images/users/profile_32.png')).toPromise();
-   // this.favProducsList$ = this._favs.getFavProductsList();
-    //this.likedProducsList$ = this._likes.getLikedProductsList();
-    this.favProducsList$ = this._favs.favs$.pipe(tap(data => console.log(data)));
-    this.likedProducsList$ = this._likes.likes$;
+    this.photoUrl = await this.user$
+      .pipe(
+        first(),
+        map((user) =>
+          user?.photoUrl ? user?.photoUrl : 'assets/images/users/profile_32.png'
+        )
+      )
+      .toPromise();
+    this.favProducsList$ = this._favs.getFavProductsList();
+    this.likedProducsList$ = this._likes.getLikedProductsList();
+    //this.favProducsList$ = this._favs.favs$.pipe(tap(data => console.log(data)));
+    //this.likedProducsList$ = this._likes.likes$;
     this.likes = this._likes.getCountByUID(uid);
     this.favs = this._favs.getCountByUID(uid);
   }
 
-  async takePicture(){
+  async takePicture() {
     await this._photo.takePict();
     this.photoUrl = this._photo.avatarURL;
     this.isActivatedCam = true;
-    
   }
 
-  savePicture(){
+  savePicture() {
     this._photo.savePict();
     this.isActivatedCam = false;
   }
-
 
   openFirst() {
     this._menu.enable(true, 'first');
@@ -75,11 +88,10 @@ export class ProfilComponent implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    this.openedSegment = ev.detail.value
-    
+    this.openedSegment = ev.detail.value;
   }
 
-  logout(){
+  logout() {
     this._auth.signOut();
     this._router.navigate(['/login']);
   }
@@ -87,33 +99,45 @@ export class ProfilComponent implements OnInit {
     const actionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [
-         {
-        text: 'edit',
-        icon: 'create-outline',
-        handler: () => {
-          console.log('edit clicked');
-        }
-      }, {
-        text: 'logout',
-        icon: 'log-out-outline',
-        handler: () => {
-          this._auth.signOut();
-          this._router.navigate(['/login']);
-          console.log('logout clicked');
-        }
-      },
-       {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+        {
+          text: 'Edit profile',
+          icon: 'create-outline',
+          handler: () => {
+            console.log('edit clicked');
+          },
+        },
+        {
+          text: 'Switch to Pro account',
+          handler: async () => {
+            const ionModal = await this._modalController.create({
+              component: ProAccountModalComponent,
+              cssClass: 'my-custom-modal-css',
+              componentProps: {
+                user$: this.user$,
+              },
+            });
+            await ionModal.present();
+          },
+        },
+        {
+          text: 'Logout',
+          icon: 'log-out-outline',
+          handler: () => {
+            this._auth.signOut();
+            this._router.navigate(['/login']);
+            console.log('logout clicked');
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {},
+        },
+      ],
     });
     await actionSheet.present();
 
     const { role } = await actionSheet.onDidDismiss();
-
   }
 }

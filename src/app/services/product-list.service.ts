@@ -81,7 +81,7 @@ export class ProductListService {
   }
 
   create(product){
-    this._af.collection('products').add(product);
+    this._af.collection('products').doc(product.id).set(product);
   }
 
   getByID(id:string){

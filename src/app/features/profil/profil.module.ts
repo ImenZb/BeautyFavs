@@ -6,12 +6,14 @@ import { ProfilComponent } from './profil.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { SafePipe } from 'src/app/pipes/safe.pipe';
+import { ProAccountModalComponent } from './pro-account-modal/pro-account-modal.component';
 
 
 @NgModule({
   declarations: [
     ProfilComponent,
-    SafePipe],
+    SafePipe,
+    ProAccountModalComponent],
   imports: [
     CommonModule,
     ProfilRoutingModule,
