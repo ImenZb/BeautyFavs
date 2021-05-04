@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as dayJS from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
+dayJS.extend(relativeTime);
 
 @Pipe({
   name: 'dayJS',
@@ -10,9 +11,7 @@ export class DayJSPipe implements PipeTransform {
     value: string,
     method: 'fromNow' | 'toNow',
     withoutSuffix: boolean = false
-  ): string {
-    console.log('--->',value);
-    
+  ): string {  
     if (!value) return '';
     switch (true) {
       case method === 'fromNow':

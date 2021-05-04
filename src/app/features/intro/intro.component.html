@@ -1,25 +1,27 @@
 <ion-content>
   <ion-slides pager="true">
-
     <ion-slide>
-      <ion-text color="light">
-        <img src="./assets/logo_Intro.png">
+      <ion-text color="light" class="ion-padding">
         <h1>Hey there!</h1>
         <p>This is an epic app because you will find the best product.</p>
-        <p>Join our community to share your feed too...</p>
-        <p>Get free advice from Professional!</p>
+        <ion-item>
+          <ion-icon color="new" slot="start" name="checkmark-outline"></ion-icon>
+        <p>Join our community to share your feed too</p>
+        </ion-item>
+        <ion-item>
+          <ion-icon color="new" slot="start" name="checkmark-outline"></ion-icon>
+        <p>Get free advice from Professional</p>     
+        </ion-item>
         <ion-button (click)="next()" fill="outline" color="light">Next</ion-button>
       </ion-text>
     </ion-slide>
-
     <ion-slide>
       <ion-text color="light">
-        <img src="./assets/logo_Intro.png">
+        <img src="./assets/images/logo_Intro.png">
         <h1>It's TOC</h1>
         <p>... It shows all the best you need!</p>
         <ion-button (click)="start()" fill="outline" color="light">Start</ion-button>
       </ion-text>
     </ion-slide>
-
   </ion-slides>
 </ion-content>

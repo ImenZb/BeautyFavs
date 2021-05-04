@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
+import { LOGGED_KEY } from 'src/app/guards/intro.guard';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +31,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  loginWithGoogle() {
+  async loginWithGoogle() {
+    await Storage.set({key: LOGGED_KEY, value: 'true'});
     this._userService.GoogleAuth();
   }
 

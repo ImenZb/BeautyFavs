@@ -3,6 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
+import { LOGGED_KEY } from 'src/app/guards/intro.guard';
 
 @Component({
   selector: 'app-register',
@@ -31,12 +34,13 @@ export class RegisterComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
-  onSubmit() {
+  async onSubmit() {
         this.submitted = true;
         // form is invalid
         if (this.registerForm.invalid) {
             return;
         }
+        await Storage.set({key: LOGGED_KEY, value: 'true'});
         this._userService.registerWithEmailPwd(this.registerForm.value);
         this._router.navigate(['/home']);
         

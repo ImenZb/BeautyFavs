@@ -71,10 +71,11 @@
               <ion-list-header lines="line" class="ion-no-padding ion-no-margin ion-padding-bottom">
                 <ion-chip class="ion-no-padding ion-no-margin" [style.background]="'#fff'" *ngIf="(product.id | first | async) as post; else comment">
                   <ion-label class="post_label">{{post.username}},
+                    <span class="post-text">{{post.body}}</span>
                   </ion-label>
+                  
                   <ion-note>
-                    <p class="post-text">{{post.body}}</p>
-                    <p class="post-text">{{(post?.date) | dayJS}}</p>
+                    <p class="post-date">{{(post?.date).toDate() | dayJS:'fromNow'}}</p>
                   </ion-note>
                   <ion-button fill="clear" (click)="openModal(product)" size="small">
                     <span class="comment-text1">See all feeds</span>

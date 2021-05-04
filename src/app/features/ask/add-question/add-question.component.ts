@@ -1,5 +1,7 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { IPhoto } from 'src/app/interfaces/photo';
 import { PhotoService } from 'src/app/services/photo.service';
 import { QuestionService } from 'src/app/services/question.service';
@@ -24,7 +26,9 @@ export class AddQuestionComponent implements OnInit {
   @ViewChildren("img") imgs: QueryList<any>;
   constructor(private _photoService: PhotoService,
     private _auth: AngularFireAuth,
-    private _questionService: QuestionService) { }
+    private _questionService: QuestionService,
+    private _router: Router,
+    public alertController: AlertController) { }
 
   ngOnInit() {
     
@@ -81,6 +85,26 @@ export class AddQuestionComponent implements OnInit {
     //ToDo add userID in the response
     console.log('question to add in firebase ',
     {uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});*/
-    this._questionService.addQuestion({uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});
+    if(!this.selectedTag || this.categories.length < 0 || this.textQuestion === '' || photosURL.length < 0){
+      this.showAlert();
+    }else{
+      this._questionService.addQuestion({uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});
+      this._router.navigate(['../']);
+    }
+  
+  }
+
+  showAlert() {
+    this.alertController.create({
+      header: 'Alert',
+      subHeader: 'Question form not completed',
+      message: 'Please fill all fields',
+      buttons: ['OK']
+    }).then(res => {
+
+      res.present();
+
+    });
+
   }
 }
