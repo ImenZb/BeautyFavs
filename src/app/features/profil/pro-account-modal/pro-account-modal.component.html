@@ -20,7 +20,7 @@
             </ion-col>
             <ion-col size="12">
                 <ion-item>
-                    <ion-input type="text" placeholder="category"></ion-input>
+                    <ion-input [(ngModel)]="category" type="text" placeholder="category"></ion-input>
                     <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
                         Save
                     </ion-button>

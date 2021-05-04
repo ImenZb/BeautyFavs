@@ -56,8 +56,6 @@ export class ProfilComponent implements OnInit {
       .toPromise();
     this.favProducsList$ = this._favs.getFavProductsList();
     this.likedProducsList$ = this._likes.getLikedProductsList();
-    //this.favProducsList$ = this._favs.favs$.pipe(tap(data => console.log(data)));
-    //this.likedProducsList$ = this._likes.likes$;
     this.likes = this._likes.getCountByUID(uid);
     this.favs = this._favs.getCountByUID(uid);
   }

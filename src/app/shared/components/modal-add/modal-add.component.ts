@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { IUser } from 'src/app/interfaces/user';
 import { ProductService } from 'src/app/servicesFirebase/product.service';
-import { Produit } from 'src/app/interfaces/produit';
+import { IProduit, Produit } from 'src/app/interfaces/produit';
 import { ProductListService } from 'src/app/services/product-list.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { PostService } from 'src/app/services/post.service';
@@ -67,8 +67,8 @@ export class ModalAddComponent implements OnInit {
     const category = this.form.get('category').value;
     const brand = this.form.get('brand').value;
     const date: Date = new Date();
-    const product = {id, product_name, brand, tag, category, created_datetime: date,
-                    imageUrl:this.productImg, likes:0};
+    const product:IProduit = {id, product_name, brand, tag, category, created_datetime: date,
+      image_url:this.productImg, likes:0};
     const uid:string = this.user?.uid;
     const post = {uid,
                   productId:id,

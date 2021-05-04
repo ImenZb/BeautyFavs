@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { IPhoto } from 'src/app/interfaces/photo';
 import { PhotoService } from 'src/app/services/photo.service';
+import { QuestionService } from 'src/app/services/question.service';
 
 
 @Component({
@@ -19,7 +21,10 @@ export class AddQuestionComponent implements OnInit {
   items: string[]=[];
   categories: string[] = [];
   
-  constructor(private _photoService: PhotoService) { }
+  @ViewChildren("img") imgs: QueryList<any>;
+  constructor(private _photoService: PhotoService,
+    private _auth: AngularFireAuth,
+    private _questionService: QuestionService) { }
 
   ngOnInit() {
     
@@ -60,12 +65,22 @@ export class AddQuestionComponent implements OnInit {
     /**
      * image from camera plugin
      */
-  async saveImageUrl(){
+  delete(index: number){
+    this.photos.slice(index,1);
+    this.imgs.toArray()[0].el.style.display = 'none';
+  }
+  async addImageUrl(){
     await this._photoService.addNewToGallery();
     this.photos = this._photoService.photos;
   }
-  onClick(){
+  async onClick(){
+    const {uid = null} = await this._auth.currentUser;
+    const photosURL = await this._photoService.getGaleryURL();
+    /*console.log('photosURL',photosURL);
+    
     //ToDo add userID in the response
-    console.log('question to add in firebase ',{tag:this.selectedTag,categories:this.categories,text:this.textQuestion, imageUrl:this.imageUrl});
+    console.log('question to add in firebase ',
+    {uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});*/
+    this._questionService.addQuestion({uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});
   }
 }

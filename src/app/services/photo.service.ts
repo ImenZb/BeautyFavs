@@ -25,9 +25,21 @@ export class PhotoService {
     const imageUrl = capturedPhoto.webPath;
     this.avatarURL = imageUrl;
     this.photos.unshift({
-      filePath: '',
       webPath: this.avatarURL
     });
+  }
+
+  getGaleryURL(){
+    return Promise.all(this.photos.map(async(photo) => {
+      const blob = await this._readAsBlob(photo.webPath);
+      const timeStamp = Date.now();
+      const {uid = null} = await this._auth.currentUser;
+      const ref = this._storage.ref(timeStamp + '_' + uid + '.jpeg');
+      const task = ref.put(blob);
+      await task.then();
+      const url = await ref.getDownloadURL().toPromise();
+      return url;
+    }));
   }
 
   async takePict() {

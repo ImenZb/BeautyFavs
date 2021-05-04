@@ -74,7 +74,7 @@
                   </ion-label>
                   <ion-note>
                     <p class="post-text">{{post.body}}</p>
-                    <p class="post-text">{{(post?.date?.toDate()) | date}}</p>
+                    <p class="post-text">{{(post?.date) | dayJS}}</p>
                   </ion-note>
                   <ion-button fill="clear" (click)="openModal(product)" size="small">
                     <span class="comment-text1">See all feeds</span>

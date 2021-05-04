@@ -1,0 +1,16 @@
+ion-img{
+    position: relative;
+}
+ion-icon.icon1-img{
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    opacity: 0.5;
+    background-color: black;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+ion-img[src=""] {
+    display: none;
+}

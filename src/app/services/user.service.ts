@@ -74,4 +74,12 @@ export class UserService {
   getAll(){
     return this._af.collection<IUser>('users').valueChanges();
   }
+
+  update(uid: string, value:{role:string}, category: string){
+    const id = this._af.createId();
+    this._af.doc('pro-categories/' + id).set({id,category})
+    this._af.doc('users/'+ uid).update({...value, categoryId: id});
+  }
+
+
 }

@@ -11,6 +11,8 @@ export class DayJSPipe implements PipeTransform {
     method: 'fromNow' | 'toNow',
     withoutSuffix: boolean = false
   ): string {
+    console.log('--->',value);
+    
     if (!value) return '';
     switch (true) {
       case method === 'fromNow':

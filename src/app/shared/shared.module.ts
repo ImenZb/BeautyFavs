@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     IonicModule,
     ReactiveFormsModule,
     FormsModule
-  ]
+  ],
+  exports: [...PIPES]
 })
 export class SharedModule { }

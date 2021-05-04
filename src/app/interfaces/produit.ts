@@ -6,10 +6,9 @@ export interface IProduit {
     brand:string;
     category:string;
     tag:string;
-    imageUrl?:string;
+    image_url?:string;
     username?: string;
-    created_datetime:string;
-    feed:[{postId:number,body:string}];
+    created_datetime:Date;
     likes?:number;
 }
 
@@ -19,10 +18,9 @@ export class Produit implements IProduit{
     brand:string;
     category:string;
     tag:string;
-    imageUrl?:string;
+    image_url?:string;
     username?: string;
-    created_datetime:string;
-    feed:[{postId:number,body:string}];
+    created_datetime:Date;
     likes?:number;
     
     constructor(params){

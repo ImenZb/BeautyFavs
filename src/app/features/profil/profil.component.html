@@ -17,7 +17,7 @@
       <ion-row class="ion-padding-top">
         <ion-col size="4">
           <div class="profile-avatar">
-            <img [src]="photoUrl | safe" />
+            <img *ngIf="!!photoUrl" [src]="photoUrl | safe" />
             <ion-icon *ngIf="isActivatedCam;else takephoto" (click)="savePicture()" color="primary" name="add-circle"></ion-icon>
             <ng-template #takephoto>
               <ion-icon (click)="takePicture()" color="primary" name="camera"></ion-icon>
