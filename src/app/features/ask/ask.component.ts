@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { QuestionService } from 'src/app/services/question.service';
 
 @Component({
   selector: 'app-ask',
@@ -11,9 +13,12 @@ export class AskComponent implements OnInit {
               {username:'Samantha',imageUrl:'3.jpg'},
               {username:'Karianne',imageUrl:'4.jpg'},
               {username:'Kamren',imageUrl:'5.jpg'}];
-  constructor() { }
-
+  constructor(private _questionService: QuestionService) { }
+  questions$;
   ngOnInit(): void {
+    this.questions$ = this._questionService.getAllOrderedByTags();
   }
+
+  
 
 }

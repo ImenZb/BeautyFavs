@@ -12,4 +12,8 @@ export class QuestionService {
     const id = this._af.createId();
     this._af.doc('questions/' + id).set({...question,id});
   }
+
+  getAllOrderedByTags(){
+    return this._af.collection('questions', ref => ref.orderBy('tag', 'desc')).valueChanges();
+  }
 }

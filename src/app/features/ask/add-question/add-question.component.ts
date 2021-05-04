@@ -89,7 +89,9 @@ export class AddQuestionComponent implements OnInit {
       this.showAlert();
     }else{
       this._questionService.addQuestion({uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});
-      this._router.navigate(['../']);
+      this.photos = [];
+      this._router.navigate(['ask']);
+      
     }
   
   }
