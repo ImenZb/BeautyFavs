@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { AskComponent } from './ask.component';
+import { ProfilProComponent } from './profil-pro/profil-pro.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,9 @@ const routes: Routes = [
   }, 
   {
     path:'question', component:AddQuestionComponent
+  },
+  {
+    path:'pro/:id', component:ProfilProComponent
   }
 ];
 

@@ -9,12 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { UsernamePipe } from 'src/app/pipes/username.pipe';
 import { FilterByTagPipe } from 'src/app/pipes/filter-by-tag.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ProfilProComponent } from './profil-pro/profil-pro.component';
 
 
 @NgModule({
   declarations: [AskComponent, AddQuestionComponent,
     UsernamePipe,
-    FilterByTagPipe],
+    FilterByTagPipe,
+    ProfilProComponent],
   imports: [
     CommonModule,
     AskRoutingModule,

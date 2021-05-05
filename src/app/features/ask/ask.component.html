@@ -13,7 +13,7 @@
           <ion-label class="label">Professionels</ion-label>
         </ion-list-header>
         <ion-list class="ion-padding-bottom">
-          <ion-item *ngFor="let proUser of (proUsers$ | async)" lines="none" class="ion-text-center ion-no-padding">
+          <ion-item *ngFor="let proUser of (proUsers$ | async)" lines="none" class="ion-text-center ion-no-padding" (click)="onClick(proUser.uid)">
             <ion-avatar slot="start">
               <img [src]="proUser.photoUrl" />
             </ion-avatar>

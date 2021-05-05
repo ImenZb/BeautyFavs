@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-toolbar >
+        <ion-title class="ion-text-start">{{(proUser$ | async)?.username}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button text=""></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row class="ion-padding-top cover">
+      <ion-col size="4">
+        <div class="profile-avatar">
+          <img *ngIf="(proUser$ | async)?.photoUrl as photo; else default" [src]="photo" />
+          <ng-template #default>
+            <img src="./assets/images/users/profile_32.png">
+          </ng-template>
+        </div>
+      </ion-col>
+      <ion-col size="8" class="ion-align-self-center">
+        <ion-row>
+          <ion-col size="4" class="data-box">
+            <strong>
+              nb
+            </strong>
+            <p>Posts</p>
+          </ion-col>
+          <ion-col size="4" class="data-box">
+            <strong>
+              nb
+            </strong>
+            <p>followers</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="sec-row cover">
+      <ion-col size="6">
+        <p class="status">
+          <strong class="name">{{(proUser$ | async)?.firstName}} {{(proUser$ | async)?.lastName}} </strong> <br>
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button class="btn-edit" expand="full" color="light">Follow</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

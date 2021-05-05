@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { QuestionService } from 'src/app/services/question.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,7 +17,8 @@ export class AskComponent implements OnInit {
               {username:'Kamren',imageUrl:'5.jpg'}];
   proUsers$;
   constructor(private _questionService: QuestionService,
-    private _userService: UserService) { }
+    private _userService: UserService,
+    private _router: Router) { }
   questions$;
   tags: string[]=['anti-acne','anti-rides','anti-rougeurs','anti-UV','bronzant',
                 'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
@@ -26,6 +28,8 @@ export class AskComponent implements OnInit {
     this.proUsers$ = this._userService.getAllPro();
   }
 
-  
+  onClick(uid: string){
+    this._router.navigate(['ask/pro/' + uid]);
+  }
 
 }
