@@ -10,9 +10,9 @@
     <ion-row class="ion-no-padding">
       <ion-col size="12" class="ion-no-padding">
         <ion-list-header class="ion-no-margin">
-            <ion-label class="label">Professionels</ion-label>
-            <ion-button color="light">See All</ion-button>
-          </ion-list-header>
+          <ion-label class="label">Professionels</ion-label>
+          <ion-button color="light">See All</ion-button>
+        </ion-list-header>
         <ion-list class="ion-no-padding">
           <ion-item *ngFor="let proUser of proUsers" lines="none" class="ion-text-center ion-no-padding">
             <ion-avatar slot="start">
@@ -32,29 +32,36 @@
         </ion-button>
       </ion-col>
     </ion-row>
-    <ion-list-header class="ion-no-margin">
-      <ion-label class="label">Tag name</ion-label>
-      <ion-button color="light">See All</ion-button>
-    </ion-list-header>
-    <ion-row class="ion-no-padding ion-no-margin">
-      <ion-col *ngFor="let question of (questions$ | async)" size="6">
-        <ion-card class="ion-no-padding">
-          <ion-card-content class="ion-no-padding">
-            <img class="img-wrapper" [src]="question?.photosURL[0]">
-            <ion-item lines="none" class="ion-no-padding itemQuestion">
-              <div class="ion-text-start padding-bottom">
-                <h4><b>{{question?.text}}</b></h4>
-                <ion-text color="primary">
-                  <p class="padding-bottom"><b>{{question?.uid | username | async}}</b></p>
-                </ion-text>
-                <ion-text>
-                  <p><span>day</span><span>nb comments</span></p>
-                </ion-text>
-              </div>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+    <ng-container *ngFor="let tag of tags">
+      <ng-container *ngIf="(questions$ | async | filterByTag: tag)?.length > 0">
+        <ion-list-header class="ion-no-margin">
+          <ion-label class="label">{{tag}}</ion-label>
+          <ion-button color="light">See All</ion-button>
+        </ion-list-header>
+        <ion-row class="ion-no-padding ion-no-margin">
+          <ion-col *ngFor="let question of (questions$ | async | filterByTag: tag)" size="6">
+            <ion-card class="ion-no-padding">
+              <ion-card-content class="ion-no-padding">
+                <img class="img-wrapper" [src]="question?.photosURL[0]">
+                <ion-item lines="none" class="ion-no-padding itemQuestion">
+                  <div class="ion-text-start padding-bottom">
+                    <h4><b>{{question?.text}}</b></h4>
+                    <ion-text color="primary">
+                      <p class="padding-bottom"><b>{{question?.uid | username | async}}</b></p>
+                    </ion-text>
+                    <ion-text>
+                      <ion-text class="questionDate ion-margin-right">
+                        <p>{{question?.date.toDate() | dayJS : 'fromNow'}}
+                          <span class="questionNbComments"><ion-icon name="chatbubble-outline"></ion-icon>nb</span></p>
+                      </ion-text>
+                    </ion-text>
+                  </div>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+    </ng-container>
   </ion-grid>
 </ion-content>

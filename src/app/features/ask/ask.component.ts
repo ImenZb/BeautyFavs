@@ -15,6 +15,9 @@ export class AskComponent implements OnInit {
               {username:'Kamren',imageUrl:'5.jpg'}];
   constructor(private _questionService: QuestionService) { }
   questions$;
+  tags: string[]=['anti-acne','anti-rides','anti-rougeurs','anti-UV','bronzant',
+                'hydratant','nettoyant','peaux-sensibles','peaux-mixtes','peaux-seches',
+                'peaux-normales','cheveux','masque','corps','rasage','mains'];
   ngOnInit(): void {
     this.questions$ = this._questionService.getAllOrderedByTags();
   }

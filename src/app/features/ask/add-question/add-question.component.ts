@@ -70,13 +70,28 @@ export class AddQuestionComponent implements OnInit {
      * image from camera plugin
      */
   delete(index: number){
-    this.photos.slice(index,1);
+    console.log('photos before delete', this.photos);
+    console.log('service photos before delete', this._photoService.photos);
+    if(index === 0){
+      this.photos.shift();
+      this._photoService.photos.shift();
+    }else{
+      this.photos = this.photos.splice(index, 1);
+      this._photoService.photos = this._photoService.photos.splice(index, 1);
+    }
     this.imgs.toArray()[0].el.style.display = 'none';
+    console.log('index', index);
+    
+    console.log('photos after delete', this.photos);
+    console.log('service photos after delete', this._photoService.photos);
   }
   async addImageUrl(){
     await this._photoService.addNewToGallery();
     this.photos = this._photoService.photos;
+    console.log('--->',this.photos);
+    
   }
+
   async onClick(){
     const {uid = null} = await this._auth.currentUser;
     const photosURL = await this._photoService.getGaleryURL();
@@ -85,11 +100,12 @@ export class AddQuestionComponent implements OnInit {
     //ToDo add userID in the response
     console.log('question to add in firebase ',
     {uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});*/
-    if(!this.selectedTag || this.categories.length < 0 || this.textQuestion === '' || photosURL.length < 0){
+    if(!this.selectedTag || this.categories.length < 0 || this.textQuestion === '' || this.photos.length < 0){
       this.showAlert();
     }else{
-      this._questionService.addQuestion({uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL});
+      this._questionService.addQuestion({uid,tag:this.selectedTag,categories:this.categories,text:this.textQuestion, photosURL, date: new Date()});
       this.photos = [];
+      this._photoService.photos = [];
       this._router.navigate(['ask']);
       
     }
