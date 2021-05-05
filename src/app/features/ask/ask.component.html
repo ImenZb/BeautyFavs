@@ -11,15 +11,15 @@
       <ion-col size="12" class="ion-no-padding">
         <ion-list-header class="ion-no-margin">
           <ion-label class="label">Professionels</ion-label>
-          <ion-button color="light">See All</ion-button>
         </ion-list-header>
-        <ion-list class="ion-no-padding">
-          <ion-item *ngFor="let proUser of proUsers" lines="none" class="ion-text-center ion-no-padding">
+        <ion-list class="ion-padding-bottom">
+          <ion-item *ngFor="let proUser of (proUsers$ | async)" lines="none" class="ion-text-center ion-no-padding">
             <ion-avatar slot="start">
-              <img [src]="'./assets/images/users/' + proUser.imageUrl" />
+              <img [src]="proUser.photoUrl" />
             </ion-avatar>
-            <ion-label>
+            <ion-label class="ion-padding-top">
               <p>{{proUser.username}}</p>
+              <p>{{proUser.categoryId | category | async}}</p>
             </ion-label>
           </ion-item>
         </ion-list>
@@ -35,8 +35,8 @@
     <ng-container *ngFor="let tag of tags">
       <ng-container *ngIf="(questions$ | async | filterByTag: tag)?.length > 0">
         <ion-list-header class="ion-no-margin">
-          <ion-label class="label">{{tag}}</ion-label>
-          <ion-button color="light">See All</ion-button>
+          <ion-label class="label ion-text-capitalize">{{tag}}</ion-label>
+          <ion-button color="light" size="small"><ion-icon slot="end" name="chevron-forward-outline"></ion-icon>See All</ion-button>
         </ion-list-header>
         <ion-row class="ion-no-padding ion-no-margin">
           <ion-col *ngFor="let question of (questions$ | async | filterByTag: tag)" size="6">
@@ -44,13 +44,13 @@
               <ion-card-content class="ion-no-padding">
                 <img class="img-wrapper" [src]="question?.photosURL[0]">
                 <ion-item lines="none" class="ion-no-padding itemQuestion">
-                  <div class="ion-text-start padding-bottom">
-                    <h4><b>{{question?.text}}</b></h4>
-                    <ion-text color="primary">
-                      <p class="padding-bottom"><b>{{question?.uid | username | async}}</b></p>
+                  <div class="ion-text-start">
+                    <ion-text class="ion-padding-bottom"><h4><b>{{question?.text}}</b></h4></ion-text>
+                    <ion-text class="ion-padding-bottom" color="primary">
+                      <p><b>{{question?.uid | username | async}}</b></p>
                     </ion-text>
                     <ion-text>
-                      <ion-text class="questionDate ion-margin-right">
+                      <ion-text color="medium" class="questionDate">
                         <p>{{question?.date.toDate() | dayJS : 'fromNow'}}
                           <span class="questionNbComments"><ion-icon name="chatbubble-outline"></ion-icon>nb</span></p>
                       </ion-text>

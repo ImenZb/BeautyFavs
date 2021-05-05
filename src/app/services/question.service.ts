@@ -16,4 +16,6 @@ export class QuestionService {
   getAllOrderedByTags(){
     return this._af.collection('questions', ref => ref.orderBy('tag', 'desc')).valueChanges();
   }
+
+  
 }

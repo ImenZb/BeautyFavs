@@ -81,5 +81,8 @@ export class UserService {
     this._af.doc('users/'+ uid).update({...value, categoryId: id});
   }
 
+  getAllPro(){
+    return this._af.collection('users', ref => ref.where('role', '==', 'pro')).valueChanges();
+  }
 
 }
