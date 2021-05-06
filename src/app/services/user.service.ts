@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
 import { IUser } from '../interfaces/user';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
@@ -36,6 +36,7 @@ export class UserService {
 
   GoogleAuth() {
     this.AuthLogin(new firebase.auth.GoogleAuthProvider());
+
   }  
 
   // Auth logic to run auth providers
@@ -48,7 +49,12 @@ export class UserService {
                                       uid: result?.user.uid,
                                       photoUrl: result?.user.photoURL                                                         
                                     }
-          this._af.doc(`users/${user.uid}`).set(user, {merge: true});
+          this._af.doc(`users/${user.uid}`).get().toPromise().then(
+            data => {
+              if(!data.exists){
+                this._af.doc(`users/${user.uid}`).set(user, {merge: true});
+              }
+            })
           this._router.navigate(['home']);
     }).catch((error) => {
       window.alert(error);

@@ -55,6 +55,7 @@ export class FavService {
     .pipe(
       map(user => user?.uid),
       switchMap(uid => {
+        if(!uid)return of([]);
         return this._firestore
         .collection<IProduit & {key: string}>(
           'fav-products',

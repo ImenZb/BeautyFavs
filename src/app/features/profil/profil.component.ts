@@ -44,6 +44,10 @@ export class ProfilComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    
+  }
+
+  async ionViewWillEnter(): Promise<void>{
     const { uid = null } = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
     this.photoUrl = await this.user$
@@ -123,7 +127,6 @@ export class ProfilComponent implements OnInit {
           handler: () => {
             this._auth.signOut();
             this._router.navigate(['/login']);
-            console.log('logout clicked');
           },
         },
         {

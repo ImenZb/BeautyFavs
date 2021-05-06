@@ -20,8 +20,7 @@ export class LoginComponent implements OnInit {
     private _authService: AngularFireAuth,
     private _userService: UserService,
     private _alertController: AlertController,
-    private _router: Router,
-    private _loadingController: LoadingController
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,9 +36,16 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    const loading = await this._loadingController.create();
-    await loading.present();
+    if(this.credentials.invalid){
+      const alert = await this._alertController.create({
+        header: 'Login failed',
+        message: 'Invalid email/password',
+        buttons: ['OK'],
+      });
 
+      await alert.present();
+      return
+    };
     this._authService
       .signInWithEmailAndPassword(
         this.credentials.controls.email.value,
@@ -47,21 +53,19 @@ export class LoginComponent implements OnInit {
       )
       .then(
         async (res) => {
-          await loading.dismiss();
           this._router.navigateByUrl('/home', { replaceUrl: true });
-        },
-        async (res) => {
-          await loading.dismiss();
-          const alert = await this._alertController.create({
-            header: 'Login failed',
-            message: res.error.error,
-            buttons: ['OK'],
-          });
+        })
+      .catch(async (error) => {
+        const alert = await this._alertController.create({
+          header: 'Login failed',
+          message: error,
+          buttons: ['OK'],
+        });
 
-          await alert.present();
-        }
-      );
+        await alert.present();
+      })    
   }
+
   get email() {
     return this.credentials.get('email');
   }
