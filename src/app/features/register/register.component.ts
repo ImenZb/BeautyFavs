@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
             return;
         }
         await Storage.set({key: LOGGED_KEY, value: 'true'});
-        this._userService.registerWithEmailPwd(this.registerForm.value);
+        await this._userService.registerWithEmailPwd(this.registerForm.value);
         this._router.navigate(['/home']);
         
     }

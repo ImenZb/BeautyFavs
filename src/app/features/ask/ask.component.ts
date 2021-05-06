@@ -10,11 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./ask.component.scss']
 })
 export class AskComponent implements OnInit {
-  proUsers = [{username:'Bret',imageUrl:'1.jpg'},
-              {username:'Antonette',imageUrl:'2.jpg'},
-              {username:'Samantha',imageUrl:'3.jpg'},
-              {username:'Karianne',imageUrl:'4.jpg'},
-              {username:'Kamren',imageUrl:'5.jpg'}];
   proUsers$;
   constructor(private _questionService: QuestionService,
     private _userService: UserService,

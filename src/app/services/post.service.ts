@@ -124,7 +124,7 @@ export class PostService {
   }
 
   //check if user already have a feed related the product
-  async isUserFeed(uid: string, productid: string) {
+  /*async isUserFeed(uid: string, productid: string) {
     const posts = await this._af
       .collection<IPost>('posts', (ref) =>
         ref.where('productId', '==', productid).where('uid', '==', uid)
@@ -133,5 +133,5 @@ export class PostService {
       .pipe(first())
       .toPromise();
     return posts.length > 0;
-  }
+  }*/
 }

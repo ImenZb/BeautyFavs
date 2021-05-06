@@ -2,7 +2,7 @@ import { getNumberOfCurrencyDigits } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 import { IProduit } from '../interfaces/produit';
 import { ProductListService } from './product-list.service';
@@ -22,6 +22,7 @@ export class LikeService {
     this._fireauth.user.pipe(
       map(user => user?.uid),
       switchMap(uid => {
+        if(!uid)return of([]);
         return this._firestore
         .collection<IProduit & {key: string}>(
           'likes-products',
@@ -29,7 +30,7 @@ export class LikeService {
         )
         .stateChanges(['added'])
         .pipe(
-          map(actions => actions.map(a => {
+          map(actions => actions?.map(a => {
             const key = a.payload.doc.id;
             const data = a.payload.doc.data();
             return {key, ...data};
@@ -119,6 +120,7 @@ export class LikeService {
   async getLikedProductsList(){
     const products = [];
     const { uid=null } = await this._fireauth.currentUser;
+    if(!uid)return(products);
     const likes = await this._firestore.collection<{uid:string,id:string}>('likes-products', ref => ref.where('uid', '==', uid)).valueChanges().pipe(first()).toPromise();
     likes.forEach(async (like) => {
       const product = await this._productListService.getByID(like.id).pipe(first()).toPromise();  
@@ -128,6 +130,7 @@ export class LikeService {
   }
 
   getCountByUID(uid: string){
+    if(!uid)return(of(0));
     return this._firestore.collection('likes-products', ref => ref.where('uid', '==', uid)).valueChanges().pipe(
       map(querySnapshot => {
         return querySnapshot.length;

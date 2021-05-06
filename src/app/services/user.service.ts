@@ -18,8 +18,8 @@ export class UserService {
               private _auth:AngularFireAuth,
               private _router: Router) { }
 
-  registerWithEmailPwd(userInput: Partial<IUser> & {password:string}){
-      this._auth.createUserWithEmailAndPassword(userInput.email,userInput.password).then(
+  async registerWithEmailPwd(userInput: Partial<IUser> & {password:string}){
+   await this._auth.createUserWithEmailAndPassword(userInput.email,userInput.password).then(
         res => {
           const uid = res.user.uid;
           const user = {
@@ -60,7 +60,8 @@ export class UserService {
       uid: user.uid,
       email: user.email,
       username: user.username,
-      lastName: user.lastName
+      lastName: user.lastName,
+      firstName: user.firstName
     }
     return userRef.set(userData, {
       merge: true

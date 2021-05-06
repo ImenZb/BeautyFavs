@@ -61,6 +61,10 @@ export class HomeComponent implements OnInit {
                }
 
   async ngOnInit(): Promise<void> {
+   
+  }
+
+  async ionViewWillEnter(): Promise<void>{
     this.productList$ = this._productListService.getProducts();
     const { uid = null} = await this._auth.currentUser;
     this.user$ = this._userService.getByUid(uid);
