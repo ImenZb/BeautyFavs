@@ -1,10 +1,10 @@
 <ion-header>
-    <ion-toolbar >
-        <ion-title>{{(proUser$ | async)?.username}}</ion-title>
-        <ion-buttons slot="start">
-            <ion-back-button text=""></ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>{{(proUser$ | async)?.username}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-grid class="">
@@ -35,28 +35,38 @@
         </p>
         <p class="status">
           <ion-icon color="medium" name="card-outline"></ion-icon>
-          <strong class="name">  {{(proUser$ | async)?.categoryId | category | async}} </strong> <br>
+          <strong class="name"> {{(proUser$ | async)?.categoryId | category | async}} </strong> <br>
         </p>
         <p class="status">
           <ion-icon color="medium" name="mail-outline"></ion-icon>
-          <strong class="name">  {{(proUser$ | async)?.email}} </strong> <br>
+          <strong class="name"> {{(proUser$ | async)?.email}} </strong> <br>
         </p>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-button class="btn-edit" fill="solid" color="new" size="default">Follow</ion-button>
+        <ng-container *ngIf="(proUser$ | async)?.uid as uidpro">
+         <ion-button *ngIf="true; else disable" (click)="follow(uidpro)" class="btn-edit" fill="solid"
+            color="new" size="default">Follow</ion-button>
+          <ng-template #disable>
+            <ion-button color="medium" disabled>Subscribed
+            </ion-button>
+          </ng-template>
+        </ng-container>
         <ion-button class="btn-edit" fill="outline" color="new">Ask a question</ion-button>
+        <ion-button class="btn-edit" fill="outline" color="new">Contact</ion-button>
       </ion-col>
     </ion-row>
     <ion-item-divider class="ion-no-padding">
-      <ion-label class="ion-text-center"><ion-text>Gallery</ion-text></ion-label>
+      <ion-label class="ion-text-center">
+        <ion-text>Gallery</ion-text>
+      </ion-label>
     </ion-item-divider>
-    <ion-row class="ion-no-padding"> 
-        <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let image of [1,2,3,4,5,6,7,8,9,10]">
-          <div class="img-wrapper" [style.background-image]="'url(assets/images/pro/' + image + '.jpg)'">
-          </div>
-        </ion-col>
+    <ion-row class="ion-no-padding">
+      <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let image of [1,2,3,4,5,6,7,8,9,10]">
+        <div class="img-wrapper" [style.background-image]="'url(assets/images/pro/' + image + '.jpg)'">
+        </div>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

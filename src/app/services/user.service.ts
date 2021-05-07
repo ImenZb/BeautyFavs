@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap, take, first } from 'rxjs/operators';
 import { IUser } from '../interfaces/user';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
@@ -88,8 +88,63 @@ export class UserService {
     this._af.doc('users/'+ uid).update({...value, categoryId: id});
   }
 
+  /**
+   * 
+   * PRO SECTION
+   */
+
   getAllPro(){
     return this._af.collection('users', ref => ref.where('role', '==', 'pro')).valueChanges();
   }
+
+  //save user uid into prouid follower doc
+  setFollower(uidpro: string,uid: string){
+    this._af.doc('followers/' + uidpro).get().pipe(
+      map(querySnapshot => {
+        if(querySnapshot.exists){
+          this._af.doc('followers/'+ uidpro).update({[uid]: true});
+        }else{
+          this._af.doc('followers/'+ uidpro).set({[uid]: true});
+        }
+      }))
+  }
+
+  //save uidpro into user following doc
+  setFollowing(uidpro: string, uid: string){
+    this._af.doc('followings/' + uid).get().pipe(map(querySnapshot => {
+      if(querySnapshot.exists){
+        this._af.doc('followings/' + uid).update({[uidpro]: true});
+      }else{
+        this._af.doc('followings/' + uid).set({[uidpro]: true});
+      }
+    }))
+   
+  }
+
+  //check if user is following uidpro
+  isFollower(uidpro: string, uid: string){
+    return this._af.doc('followers'+ uidpro).get().pipe(tap(
+     // docData => docData.get('uid')
+    ))
+  }
+
+  //get followers count
+  getCountFollowers(uidpro:string){
+    if(!uidpro)return(of(0));
+    return this._af.doc('followers' + uidpro).get().pipe(
+      map(querySnapshot => {
+        return querySnapshot.data.length;
+      }))
+  }
+
+  //get following count
+  getCountFollowing(uid: string){
+    if(!uid)return(of(0));
+    return this._af.doc('followings' + uid).get().pipe(
+      map(querySnapshot => {
+        return querySnapshot.data.length;
+      }))
+  }
+
 
 }

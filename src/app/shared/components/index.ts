@@ -1,6 +1,7 @@
 
 import { CategoryPipe } from 'src/app/pipes/category.pipe';
 import { DayJSPipe } from 'src/app/pipes/day-js.pipe';
+import { IsFollowerPipe } from 'src/app/pipes/is-follower.pipe';
 import { HeaderComponent } from './header/header.component';
 import { ModalAddComponent } from './modal-add/modal-add.component';
 import { ModalCommentComponent } from './modal-comment/modal-comment.component';
@@ -12,5 +13,6 @@ export const COMPONENTS = [
 
 export const PIPES = [
     DayJSPipe,
-    CategoryPipe
+    CategoryPipe,
+    IsFollowerPipe
 ];
