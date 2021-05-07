@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -13,6 +13,7 @@ import { QuestionService } from 'src/app/services/question.service';
   styleUrls: ['./add-question.component.scss']
 })
 export class AddQuestionComponent implements OnInit {
+  @Input() proUser$;
   textQuestion: string;
   selectedTag: string;
   imageUrl:string;

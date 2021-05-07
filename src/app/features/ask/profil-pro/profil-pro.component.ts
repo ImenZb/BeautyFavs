@@ -10,6 +10,8 @@ import { Location } from '@angular/common';
 })
 export class ProfilProComponent implements OnInit {
   proUser$;
+  isCardCollapse: number = 1;
+  isAskingPro: boolean = false;
   constructor(
     private _activeRouter: ActivatedRoute,
     private _userService: UserService,

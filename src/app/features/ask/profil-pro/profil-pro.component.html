@@ -23,12 +23,6 @@
             <strong>
               nb
             </strong>
-            <p>Posts</p>
-          </ion-col>
-          <ion-col size="4" class="data-box">
-            <strong>
-              nb
-            </strong>
             <p>followers</p>
           </ion-col>
         </ion-row>
@@ -51,9 +45,18 @@
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-button class="btn-edit" fill="solid" color="new">Follow</ion-button>
+        <ion-button class="btn-edit" fill="solid" color="new" size="default">Follow</ion-button>
+        <ion-button class="btn-edit" fill="outline" color="new">Ask a question</ion-button>
       </ion-col>
     </ion-row>
-    
+    <ion-item-divider class="ion-no-padding">
+      <ion-label class="ion-text-center"><ion-text>Gallery</ion-text></ion-label>
+    </ion-item-divider>
+    <ion-row class="ion-no-padding"> 
+        <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let image of [1,2,3,4,5,6,7,8,9,10]">
+          <div class="img-wrapper" [style.background-image]="'url(assets/images/pro/' + image + '.jpg)'">
+          </div>
+        </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 export class CategoryPipe implements PipeTransform {
   constructor(private _AF: AngularFirestore) {}
   async transform(id: string) {
+    if(!id)return '';
     const result = await this._AF
       .doc<{ category: string; id: string }>('pro-categories/' + id)
       .valueChanges()
