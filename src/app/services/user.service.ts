@@ -6,6 +6,7 @@ import { map, tap, take, first } from 'rxjs/operators';
 import { IUser } from '../interfaces/user';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { exists } from 'node:fs';
 
 
 
@@ -99,32 +100,38 @@ export class UserService {
 
   //save user uid into prouid follower doc
   setFollower(uidpro: string,uid: string){
-    this._af.doc('followers/' + uidpro).get().pipe(
+    
+    this._af.doc('followers/' + uidpro).get().pipe(first(),
       map(querySnapshot => {
         if(querySnapshot.exists){
           this._af.doc('followers/'+ uidpro).update({[uid]: true});
         }else{
           this._af.doc('followers/'+ uidpro).set({[uid]: true});
         }
-      }))
+      })).subscribe();
   }
 
   //save uidpro into user following doc
   setFollowing(uidpro: string, uid: string){
-    this._af.doc('followings/' + uid).get().pipe(map(querySnapshot => {
+    
+    this._af.doc('followings/' + uid).get().pipe(first(),map(querySnapshot => {
       if(querySnapshot.exists){
         this._af.doc('followings/' + uid).update({[uidpro]: true});
       }else{
         this._af.doc('followings/' + uid).set({[uidpro]: true});
       }
-    }))
+    })).subscribe();
    
   }
 
   //check if user is following uidpro
   isFollower(uidpro: string, uid: string){
-    return this._af.doc('followers'+ uidpro).get().pipe(tap(
-     // docData => docData.get('uid')
+   return this._af.doc('followers/'+ uidpro).get().pipe(map(
+     docData => {
+       const v: boolean = docData.get(uid);
+      //if(docData.get(uid)?.exists) 
+       return v;
+      }
     ))
   }
 
