@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Edit profil</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button color="primary" text=""></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-no-padding">
+    <ion-item lines="none">
+      <ion-label>
+        <h3><strong>{{(user$ | async)?.username}} </strong>
+        </h3>
+      </ion-label>
+    </ion-item>
+      <ion-grid>
+        <ion-row class="ion-no-padding">
+          <ion-col size="4">
+            <div class="profile-avatar">
+              <img *ngIf="!!photoUrl" [src]="photoUrl | safe" />
+              <ion-icon *ngIf="isActivatedCam;else takephoto" (click)="savePicture()" color="primary" name="add-circle"></ion-icon>
+              <ng-template #takephoto>
+                <ion-icon (click)="takePicture()" color="primary" name="camera"></ion-icon>
+              </ng-template>
+            </div>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row class="ion-no-padding formEdit">
+            <ion-item-divider>
+                <ion-label><h3>Edit your personnal infos</h3></ion-label>
+            </ion-item-divider>
+            <ion-col size="12" class="ion-no-padding ion-margin-top">
+                <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                    <ion-item>
+                        <ion-label position="floating">E-Mail</ion-label>
+                        <ion-input required formControlName="email" type="text" [value]="(user$ | async)?.email">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">FirstName</ion-label>
+                        <ion-input required formControlName="firstName" type="text" [value]="(user$ | async)?.firstName"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">LasttName</ion-label>
+                        <ion-input required formControlName="lastName" type="text" [value]="(user$ | async)?.lastName"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Username</ion-label>
+                        <ion-input required formControlName="username" type="text" [value]="(user$ | async)?.username"></ion-input>
+                    </ion-item>
+                    <div class="ion-margin-top ion-margin-bottom ion-text-center">
+                    <ion-button color="primary" type="submit" [disabled]="editForm.invalid">
+                        Save
+                    </ion-button>
+                </div>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

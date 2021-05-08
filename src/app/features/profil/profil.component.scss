@@ -23,13 +23,6 @@ ion-item{
     max-height: 100px !important; 
 }
 
-ion-avatar img{
-    border-radius: 0;
-    opacity: 0.2;  
-}
-
-
-
 ion-label{
     font-size: 12px;
     text-transform: capitalize;
@@ -39,6 +32,7 @@ ion-label{
     position: absolute;
     right: 5px;
 }
+
 .img_box {
     width: 33.3%;
     padding-bottom: 31%;
@@ -135,6 +129,7 @@ ion-grid {
 
 p.status {
     font-size: 12px;
+    padding-left: 10px;
 }
 
 strong.name {

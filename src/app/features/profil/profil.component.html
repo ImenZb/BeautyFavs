@@ -17,30 +17,26 @@
       <ion-row class="ion-padding-top">
         <ion-col size="4">
           <div class="profile-avatar">
-            <img *ngIf="!!photoUrl" [src]="photoUrl | safe" />
-            <ion-icon *ngIf="isActivatedCam;else takephoto" (click)="savePicture()" color="primary" name="add-circle"></ion-icon>
-            <ng-template #takephoto>
-              <ion-icon (click)="takePicture()" color="primary" name="camera"></ion-icon>
-            </ng-template>
+            <img *ngIf="!!photoUrl" [src]="photoUrl" />
           </div>
         </ion-col>
         <ion-col size="8" class="ion-align-self-center">
           <ion-row>
             <ion-col size="4" class="data-box">
               <strong>
-                {{likes | async}}
+                {{likes$ | async}}
               </strong>
               <p>Likes</p>
             </ion-col>
             <ion-col size="4" class="data-box">
               <strong>
-                {{favs | async}}
+                {{favs$ | async}}
               </strong>
               <p>favs</p>
             </ion-col>
             <ion-col size="4" class="data-box">
               <strong>
-                nb
+                {{nbFollowings$ | async}}
               </strong>
               <p>Following Pros</p>
             </ion-col>
@@ -48,15 +44,15 @@
         </ion-col>
       </ion-row>
       <ion-row class="sec-row">
-        <ion-col size="6">
+        <ion-col size="6" class="ion-margin-left">
           <p class="status">
-            <strong class="name">{{(user$ | async)?.firstName}} {{(user$ | async)?.lasttName}}</strong> <br>
+            <strong class="name">{{(user$ | async)?.firstName}} {{(user$ | async)?.lastName}}</strong> <br>
           </p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <ion-button class="btn-edit" expand="full" color="light">Edit Profile</ion-button>
+          <ion-button routerLink="edit" class="btn-edit" expand="full" color="light">Edit Profile</ion-button>
         </ion-col>
       </ion-row>
       <ion-row class="ion-padding-top">
@@ -90,7 +86,12 @@
               </div>
             </div>
             <div *ngSwitchDefault>
-              pros
+              <ion-item *ngFor="let pro of (followingList | async)" [routerLink]="'pro/' + pro?.uid">
+                <ion-avatar slot="start">
+                  <img [src]="pro?.photoUrl"/>
+                </ion-avatar>
+                <ion-label><h3>{{pro?.username}}</h3><p>{{pro?.categoryId | category | async}}</p></ion-label>
+              </ion-item>
             </div>
           </div>
         </ion-col>

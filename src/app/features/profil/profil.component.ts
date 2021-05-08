@@ -27,10 +27,12 @@ export class ProfilComponent implements OnInit {
   favProducsList$;
   likedProducsList$;
   avatarURL: string;
-  photoUrl;
+  photoUrl: string;
   isActivatedCam = false;
-  likes: Observable<number>;
-  favs: Observable<number>;
+  likes$: Observable<number>;
+  favs$: Observable<number>;
+  nbFollowings$: Observable<number>;
+  followingList;
   constructor(
     public actionSheetCtrl: ActionSheetController,
     private _auth: AngularFireAuth,
@@ -60,8 +62,11 @@ export class ProfilComponent implements OnInit {
       .toPromise();
     this.favProducsList$ = this._favs.getFavProductsList();
     this.likedProducsList$ = this._likes.getLikedProductsList();
-    this.likes = this._likes.getCountByUID(uid);
-    this.favs = this._favs.getCountByUID(uid);
+    this.likes$ = this._likes.getCountByUID(uid);
+    this.favs$ = this._favs.getCountByUID(uid);
+    this.nbFollowings$ = this._userService.getCountFollowing(uid);
+    this.followingList = this._userService.getFollowingInfos(uid);
+    
   }
 
   async takePicture() {

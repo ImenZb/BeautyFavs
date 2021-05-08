@@ -21,7 +21,7 @@
         <ion-row>
           <ion-col size="4" class="data-box">
             <strong>
-              nb
+              {{(nbFollowers$ | async)}}
             </strong>
             <p>followers</p>
           </ion-col>
@@ -38,7 +38,7 @@
           <strong class="name"> {{(proUser$ | async)?.categoryId | category | async}} </strong> <br>
         </p>
         <p class="status">
-          <ion-icon color="medium" name="mail-outline"></ion-icon>
+          <ion-icon color="medium" name="at-outline"></ion-icon>
           <strong class="name"> {{(proUser$ | async)?.email}} </strong> <br>
         </p>
       </ion-col>
@@ -48,11 +48,12 @@
          <ion-button *ngIf="!(isFollower$ | async); else disable" (click)="follow()" class="btn-edit" fill="solid"
             color="new" size="default">Follow</ion-button>
           <ng-template #disable>
-            <ion-button color="medium" disabled>Subscribed
+            <ion-button (click)="presentActionFollow()" color="medium">Subscribed
+              <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
             </ion-button>
           </ng-template>
-        <ion-button class="btn-edit" fill="outline" color="new">Ask a question</ion-button>
-        <ion-button class="btn-edit" fill="outline" color="new">Contact</ion-button>
+        <ion-button class="btn-edit" fill="outline" color="new">Message</ion-button>
+        <ion-button (click)="presentActionContact()" class="btn-edit" fill="outline" color="new">Contact</ion-button>
       </ion-col>
     </ion-row>
     <ion-item-divider class="ion-no-padding">

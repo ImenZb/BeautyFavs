@@ -75,6 +75,17 @@ export class UserService {
     })
   }
 
+  updateUserData(user){
+    const userRef: AngularFirestoreDocument<any> = this._af.doc(`users/${user.uid}`);
+    const userData: Partial<IUser> = {
+      email: user.email,
+      username: user.username,
+      lastName: user.lastName,
+      firstName: user.firstName
+    }
+    return userRef.update(userData);
+  }
+
   getByUid(uid:string): Observable<Partial<IUser>>{
     return this._af.doc('users/'+ uid).valueChanges();
   }
@@ -138,20 +149,42 @@ export class UserService {
   //get followers count
   getCountFollowers(uidpro:string){
     if(!uidpro)return(of(0));
-    return this._af.doc('followers' + uidpro).get().pipe(
+    return this._af.doc('followers/' + uidpro).get().pipe(
       map(querySnapshot => {
-        return querySnapshot.data.length;
+        return Object.keys(querySnapshot.data()).length;
       }))
   }
 
   //get following count
   getCountFollowing(uid: string){
     if(!uid)return(of(0));
-    return this._af.doc('followings' + uid).get().pipe(
+    return this._af.doc('followings/' + uid).get().pipe(
       map(querySnapshot => {
-        return querySnapshot.data.length;
+       return Object.keys(querySnapshot.data()).length;
       }))
   }
 
+  getFollowing(uid: string){
+    return this._af.doc('followings/' + uid).valueChanges();
+  }
+
+  async getFollowingInfos(uid: string){
+    const result = [];
+    const followingList:{} = await this.getFollowing(uid).pipe(first()).toPromise();
+    for (const key in followingList) {
+      if( followingList.hasOwnProperty( key ) ) {
+        //key => uidpro
+        const userPRoInfo = await this.getByUid(key).pipe(first()).toPromise();
+        result.push(userPRoInfo);
+      }   
+    }
+    return result;
+  }
+
+  unfollow(uidpro: string, uid: string){
+    const FieldValue = firebase.firestore.FieldValue;
+    this._af.doc('followers/' + uidpro).update({ [uid]: FieldValue.delete() });
+    this._af.doc('followings/' + uid).update({ [uidpro]: FieldValue.delete() });
+  }
 
 }

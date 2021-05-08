@@ -30,6 +30,10 @@ const routes: Routes = [
                                             .then(m => m.AskModule)
       },
       {
+        path: 'notif', loadChildren: () => import('../notifications/notifications.module')
+                                            .then(m => m.NotificationsModule)
+      },
+      {
         path:'',
         redirectTo: 'home',
         pathMatch: 'full'
