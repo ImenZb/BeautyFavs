@@ -71,7 +71,7 @@ export class PostService {
     //generate an id
     const id = this._af.createId();
     //generate date
-    const date = firebase.firestore.FieldValue.serverTimestamp();
+    const date = new Date();
     //prepare data
     const data = {
       id,
