@@ -1,7 +1,7 @@
 {
-  "name": "beautyFavs",
-  "short_name": "beautyFavs",
-  "theme_color": "#1976d2",
+  "name": "Truth on Cosmetic",
+  "short_name": "TOC",
+  "theme_color": "#f51987",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
