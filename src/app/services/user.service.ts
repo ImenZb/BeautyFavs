@@ -94,10 +94,11 @@ export class UserService {
     return this._af.collection<IUser>('users').valueChanges();
   }
 
-  update(uid: string, value:{role:string}, category: string){
+  //update user infos when switch to pro account
+  update(uid: string, value:{role:string}, category: string, location:string){
     const id = this._af.createId();
     this._af.doc('pro-categories/' + id).set({id,category})
-    this._af.doc('users/'+ uid).update({...value, categoryId: id});
+    this._af.doc('users/'+ uid).update({...value, categoryId: id, location});
   }
 
   /**
@@ -107,6 +108,10 @@ export class UserService {
 
   getAllPro(){
     return this._af.collection('users', ref => ref.where('role', '==', 'pro')).valueChanges();
+  }
+  //Near by pros
+  getProListNearby(state){
+    return this._af.collection('users', ref => ref.where('role', '==', 'pro').where('location', '==', state)).valueChanges();
   }
 
   //save user uid into prouid follower doc

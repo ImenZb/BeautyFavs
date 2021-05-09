@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AskComponent implements OnInit {
   proUsers$;
+  proUsersNearBy$;
+  nearbyClicked : boolean;
   constructor(private _questionService: QuestionService,
     private _userService: UserService,
     private _router: Router) { }
@@ -21,10 +23,20 @@ export class AskComponent implements OnInit {
   ngOnInit(): void {
     this.questions$ = this._questionService.getAllOrderedByTags();
     this.proUsers$ = this._userService.getAllPro();
+    this.nearbyClicked = false;
   }
 
   onClick(uid: string){
     this._router.navigate(['ask/pro/' + uid]);
   }
 
+  getTown(location){
+    this.nearbyClicked = true;
+    const state = location.state;
+    this.proUsersNearBy$ = this._userService.getProListNearby(state); 
+  }
+
+  initGeoLocation(isclicked){
+    this.nearbyClicked = isclicked;
+  }
 }

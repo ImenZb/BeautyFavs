@@ -1,0 +1,6 @@
+<ion-button [hidden]="isclicked" (click)="onClick()"  fill="clear" size="small">
+    <ion-icon color="light" slot="icon-only" name="navigate-outline"></ion-icon>
+</ion-button>
+<ion-button (click)="init()" fill="clear" size="small" color="light" [hidden]="!isclicked">{{(location | async)?.town}}
+    <ion-icon slot="end" name="close-circle-outline"></ion-icon>
+</ion-button>

@@ -4,10 +4,11 @@
     <ion-row class="ion-no-padding">
       <ion-col size="12" class="ion-no-padding">
         <ion-list-header class="ion-no-margin">
-          <ion-label class="label">Professionels</ion-label>
+          <ion-label class="label">Professionels nearby</ion-label>
+          <app-geolocate (locationEmitternew)="getTown($event)" (initEmitter)="initGeoLocation($event)"></app-geolocate>
         </ion-list-header>
         <ion-list class="ion-padding-bottom">
-          <ion-item *ngFor="let proUser of (proUsers$ | async)" lines="none" class="ion-text-center ion-no-padding" (click)="onClick(proUser.uid)">
+          <ion-item *ngFor="let proUser of ((nearbyClicked?proUsersNearBy$:proUsers$) | async)" lines="none" class="ion-text-center ion-no-padding" (click)="onClick(proUser.uid)">
             <ion-avatar slot="start">
               <img [src]="proUser.photoUrl" />
             </ion-avatar>

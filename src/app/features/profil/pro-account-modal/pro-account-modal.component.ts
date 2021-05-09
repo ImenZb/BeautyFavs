@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProAccountModalComponent implements OnInit {
   user$: Observable<Partial<IUser>>;
   category: string;
+  location: string;
   constructor(private _modalCtrl: ModalController,
     private _userService: UserService,
     private _auth: AngularFireAuth) { }
@@ -27,7 +28,7 @@ export class ProAccountModalComponent implements OnInit {
 
   async onClick(){
     const {uid = null} = await this.user$.pipe(first()).toPromise();
-    this._userService.update(uid,{role: "pro"},this.category);
+    this._userService.update(uid,{role: "pro"},this.category,this.location);
     this._modalCtrl.dismiss();
   }
 }
