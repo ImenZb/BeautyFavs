@@ -156,6 +156,7 @@ export class UserService {
     if(!uidpro)return(of(0));
     return this._af.doc('followers/' + uidpro).get().pipe(
       map(querySnapshot => {
+        if(!querySnapshot.exists)return 0;
         return Object.keys(querySnapshot.data()).length;
       }))
   }
@@ -165,6 +166,7 @@ export class UserService {
     if(!uid)return(of(0));
     return this._af.doc('followings/' + uid).get().pipe(
       map(querySnapshot => {
+      if(!querySnapshot.exists)return 0;
        return Object.keys(querySnapshot.data()).length;
       }))
   }
