@@ -35,6 +35,6 @@ export class GeolocateService {
     // see full list of required and optional parameters:
     // https://opencagedata.com/api#forward
     const response:any = await this._http.get(requesturl).pipe(first()).toPromise();
-    return {town: response?.results[0]?.components.town, state: response?.results[0]?.components.state};
+    return {town: response?.results[0]?.components?.village || response?.results[0]?.components?.town, state: response?.results[0]?.components?.state};
   }
 }

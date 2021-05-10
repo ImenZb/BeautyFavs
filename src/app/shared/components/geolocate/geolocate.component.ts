@@ -20,7 +20,7 @@ export class GeolocateComponent implements OnInit {
     this.location = this._geoservice.geolocateMe();
     this.isclicked = true;
     const location = await this.location;
-    this.locationEmitternew.emit(location);
+    this.locationEmitternew.emit(location);  
   }
 
   init(){
