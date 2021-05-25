@@ -28,4 +28,4 @@ jobs:
       env:
         CI: true
         # Deploy env
-        GITHUB_TOKEN: ${{ secrets.TEST }}
+        GITHUB_TOKEN: ${{ secrets.MY_SECRET }}
