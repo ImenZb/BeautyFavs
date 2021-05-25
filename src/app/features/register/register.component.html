@@ -32,7 +32,7 @@
               <div *ngIf="f.username.errors.required">Username is required</div>
             </div>
             <ion-item>
-              <label position="floating" for="password">Password</label>
+              <ion-label position="floating" for="password">Password</ion-label>
               <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
             <div *ngIf="submitted && f.password.errors" class="errors">
