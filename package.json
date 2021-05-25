@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "deploy:ftp": "ng build --prod --base-href=/~zbidi/./ && node deploy",
-    "deploy:ci": "ng deploy --base-href=/BeautyFavs/ --repo=https://github.com/ImenZb/BeautyFavs.git --name=ImenZb --email=imen.zbidi.b@gmail.com --no-silent",
+    "deploy:ci": "ng deploy --base-href=/BeautyFavs/ --repo=https://github.com/ImenZb/BeautyFavs.git --name=ImenZb --email=77958978+ImenZb@users.noreply.github.com --no-silent",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
